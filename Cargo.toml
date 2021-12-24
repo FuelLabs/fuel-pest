@@ -29,4 +29,3 @@ serde_json = { version = "1.0.39", optional = true}
 codecov = { repository = "pest-parser/pest" }
 maintenance = { status = "actively-developed" }
 travis-ci = { repository = "pest-parser/pest" }
->>>>>>> 6a34445 (fix script location)
