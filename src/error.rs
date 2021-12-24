@@ -146,7 +146,7 @@ impl<R: RuleType> Error<R> {
         let mut end_line_col = end.line_col();
         // end position is after a \n, so we want to point to the visual lf symbol
         if end_line_col.1 == 1 {
-            let mut visual_end = end.clone();
+            let mut visual_end = end;
             visual_end.skip_back(1);
             let lc = visual_end.line_col();
             end_line_col = (lc.0, lc.1 + 1);
@@ -375,6 +375,7 @@ impl<R: RuleType> Error<R> {
             1 => f(&rules[0]),
             2 => format!("{} or {}", f(&rules[0]), f(&rules[1])),
             l => {
+                #[allow(clippy::redundant_closure)]
                 let separated = rules
                     .iter()
                     .take(l - 1)
