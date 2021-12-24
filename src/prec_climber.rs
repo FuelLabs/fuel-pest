@@ -23,8 +23,8 @@ use RuleType;
 /// # Examples
 ///
 /// ```
-/// # use pest::prec_climber::{Assoc, PrecClimber};
-/// # use pest::prec_climber;
+/// # use fuel_pest::prec_climber::{Assoc, PrecClimber};
+/// # use fuel_pest::prec_climber;
 /// # #[allow(non_camel_case_types)]
 /// # #[allow(dead_code)]
 /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -127,7 +127,7 @@ impl<R: RuleType> Operator<R> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::prec_climber::{Assoc, Operator};
+    /// # use fuel_pest::prec_climber::{Assoc, Operator};
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -185,7 +185,7 @@ impl<R: Clone + 'static> PrecClimber<R> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::prec_climber::{Assoc, PrecClimber};
+    /// # use fuel_pest::prec_climber::{Assoc, PrecClimber};
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -225,7 +225,7 @@ impl<R: RuleType> PrecClimber<R> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::prec_climber::{Assoc, Operator, PrecClimber};
+    /// # use fuel_pest::prec_climber::{Assoc, Operator, PrecClimber};
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]

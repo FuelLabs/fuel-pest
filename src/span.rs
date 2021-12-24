@@ -53,7 +53,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Span;
+    /// # use fuel_pest::Span;
     /// let input = "Hello!";
     /// assert_eq!(None, Span::new(input, 100, 0));
     /// assert!(Span::new(input, 0, input.len()).is_some());
@@ -72,7 +72,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let end = start.clone();
@@ -90,7 +90,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let end = start.clone();
@@ -108,7 +108,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let end = start.clone();
@@ -127,7 +127,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let end = start.clone();
@@ -146,7 +146,7 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let end = start.clone();
@@ -168,13 +168,13 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "abc";
-    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input).skip(1).unwrap();
+    /// let mut state: Box<fuel_pest::ParserState<Rule>> =fuel_pest::ParserState::new(input).skip(1).unwrap();
     /// let start_pos = state.position().clone();
     /// state = state.match_string("b").unwrap();
     /// let span = start_pos.span(&state.position().clone());
@@ -191,13 +191,13 @@ impl<'i> Span<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "a\nb\nc";
-    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input).skip(2).unwrap();
+    /// let mut state: Box<fuel_pest::ParserState<Rule>> =fuel_pest::ParserState::new(input).skip(2).unwrap();
     /// let start_pos = state.position().clone();
     /// state = state.match_string("b\nc").unwrap();
     /// let span = start_pos.span(&state.position().clone());

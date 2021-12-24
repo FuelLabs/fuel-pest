@@ -143,10 +143,10 @@ macro_rules! consumes_to {
 ///
 /// ```
 /// # #[macro_use]
-/// # extern crate pest;
-/// # use pest::Parser;
-/// # use pest::error::Error;
-/// # use pest::iterators::Pairs;
+/// # extern crate fuel_pest;
+/// # use fuel_pest::Parser;
+/// # use fuel_pest::error::Error;
+/// # use fuel_pest::iterators::Pairs;
 /// # fn main() {
 /// # #[allow(non_camel_case_types)]
 /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -160,7 +160,7 @@ macro_rules! consumes_to {
 /// #
 /// # impl Parser<Rule> for AbcParser {
 /// #     fn parse<'i>(_: Rule, input: &'i str) -> Result<Pairs<'i, Rule>, Error<Rule>> {
-/// #         pest::state(input, |state| {
+/// #         fuel_pest::state(input, |state| {
 /// #             state.rule(Rule::a, |state| {
 /// #                 state.skip(1).unwrap().rule(Rule::b, |state| {
 /// #                     state.skip(1)
@@ -244,10 +244,10 @@ macro_rules! parses_to {
 ///
 /// ```
 /// # #[macro_use]
-/// # extern crate pest;
-/// # use pest::Parser;
-/// # use pest::error::Error;
-/// # use pest::iterators::Pairs;
+/// # extern crate fuel_pest;
+/// # use fuel_pest::Parser;
+/// # use fuel_pest::error::Error;
+/// # use fuel_pest::iterators::Pairs;
 /// # fn main() {
 /// # #[allow(non_camel_case_types)]
 /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -261,7 +261,7 @@ macro_rules! parses_to {
 /// #
 /// # impl Parser<Rule> for AbcParser {
 /// #     fn parse<'i>(_: Rule, input: &'i str) -> Result<Pairs<'i, Rule>, Error<Rule>> {
-/// #         pest::state(input, |state| {
+/// #        fuel_pest::state(input, |state| {
 /// #             state.rule(Rule::a, |state| {
 /// #                 state.skip(1).unwrap().rule(Rule::b, |s| {
 /// #                     s.skip(1)

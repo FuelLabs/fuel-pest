@@ -67,7 +67,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -75,7 +75,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();
@@ -96,7 +96,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -104,7 +104,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -126,7 +126,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -134,7 +134,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -153,7 +153,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -161,7 +161,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -183,7 +183,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -191,7 +191,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();
@@ -211,7 +211,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -219,7 +219,7 @@ impl<'i, R: RuleType> Pair<'i, R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = pest::state(input, |state| {
+    /// let pair =fuel_pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();

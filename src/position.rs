@@ -43,7 +43,7 @@ impl<'i> Position<'i> {
     ///
     /// # Examples
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let cheart = '💖';
     /// let heart = "💖";
     /// assert_eq!(Position::new(heart, 1), None);
@@ -59,7 +59,7 @@ impl<'i> Position<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let start = Position::from_start("");
     /// assert_eq!(start.pos(), 0);
     /// ```
@@ -74,7 +74,7 @@ impl<'i> Position<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let mut start = Position::from_start(input);
     ///
@@ -94,7 +94,7 @@ impl<'i> Position<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest::Position;
+    /// # use fuel_pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let span = start.span(&start.clone());
@@ -120,13 +120,13 @@ impl<'i> Position<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "\na";
-    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
+    /// let mut state: Box<fuel_pest::ParserState<Rule>> =fuel_pest::ParserState::new(input);
     /// let mut result = state.match_string("\na");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().line_col(), (2, 2));
@@ -182,13 +182,13 @@ impl<'i> Position<'i> {
     /// # Examples
     ///
     /// ```
-    /// # use pest;
+    /// # use fuel_pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "\na";
-    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
+    /// let mut state: Box<fuel_pest::ParserState<Rule>> =fuel_pest::ParserState::new(input);
     /// let mut result = state.match_string("\na");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().line_of(), "a");
