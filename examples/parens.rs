@@ -1,10 +1,10 @@
-extern crate pest;
+extern crate fuel_pest;
 
 use std::io::{self, Write};
 
-use pest::error::Error;
-use pest::iterators::Pairs;
-use pest::{state, ParseResult, Parser, ParserState};
+use fuel_pest::error::Error;
+use fuel_pest::iterators::Pairs;
+use fuel_pest::{state, ParseResult, Parser, ParserState};
 
 #[allow(dead_code, non_camel_case_types)]
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
