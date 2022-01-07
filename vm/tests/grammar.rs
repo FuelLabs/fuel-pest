@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -6,27 +6,31 @@
 // license <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
-#![allow(unknown_lints, clippy)]
-#![cfg_attr(not(feature = "std"), no_std)]
-extern crate alloc;
-use alloc::{format, vec::Vec};
+
+extern crate pest;
+extern crate pest_meta;
+#[macro_use]
+extern crate pest_vm;
+
 use std::sync::Arc;
+use pest_meta::parser::Rule;
+use pest_meta::{optimizer, parser};
+use pest_vm::Vm;
 
-#[macro_use]
-extern crate fuel_pest;
-#[macro_use]
-extern crate fuel_pest_derive;
+const GRAMMAR: &'static str = include_str!("grammar.pest");
 
-#[derive(Parser)]
-#[grammar = "../tests/grammar.pest"]
-struct GrammarParser;
+fn vm() -> Vm {
+    let pairs = parser::parse(Rule::grammar_rules, Arc::from(GRAMMAR)).unwrap();
+    let ast = parser::consume_rules(pairs).unwrap();
+    Vm::new(optimizer::optimize(ast))
+}
 
 #[test]
 fn string() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::string,
+        parser: vm(),
+        input: "abc",
+        rule: "string",
         tokens: [
             string(0, 3)
         ]
@@ -36,9 +40,9 @@ fn string() {
 #[test]
 fn insensitive() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("aBC"),
-        rule: Rule::insensitive,
+        parser: vm(),
+        input: "aBC",
+        rule: "insensitive",
         tokens: [
             insensitive(0, 3)
         ]
@@ -48,9 +52,9 @@ fn insensitive() {
 #[test]
 fn range() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("6"),
-        rule: Rule::range,
+        parser: vm(),
+        input: "6",
+        rule: "range",
         tokens: [
             range(0, 1)
         ]
@@ -60,9 +64,9 @@ fn range() {
 #[test]
 fn ident() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::ident,
+        parser: vm(),
+        input: "abc",
+        rule: "ident",
         tokens: [
             ident(0, 3, [
                 string(0, 3)
@@ -74,9 +78,9 @@ fn ident() {
 #[test]
 fn pos_pred() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::pos_pred,
+        parser: vm(),
+        input: "abc",
+        rule: "pos_pred",
         tokens: [
             pos_pred(0, 0)
         ]
@@ -86,9 +90,9 @@ fn pos_pred() {
 #[test]
 fn neg_pred() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::neg_pred,
+        parser: vm(),
+        input: "",
+        rule: "neg_pred",
         tokens: [
             neg_pred(0, 0)
         ]
@@ -98,9 +102,9 @@ fn neg_pred() {
 #[test]
 fn double_neg_pred() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::double_neg_pred,
+        parser: vm(),
+        input: "abc",
+        rule: "double_neg_pred",
         tokens: [
             double_neg_pred(0, 0)
         ]
@@ -110,9 +114,9 @@ fn double_neg_pred() {
 #[test]
 fn sequence() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc   abc"),
-        rule: Rule::sequence,
+        parser: vm(),
+        input: "abc   abc",
+        rule: "sequence",
         tokens: [
             sequence(0, 9, [
                 string(0, 3),
@@ -125,9 +129,9 @@ fn sequence() {
 #[test]
 fn sequence_compound() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::sequence_compound,
+        parser: vm(),
+        input: "abcabc",
+        rule: "sequence_compound",
         tokens: [
             sequence_compound(0, 6, [
                 string(0, 3),
@@ -140,9 +144,9 @@ fn sequence_compound() {
 #[test]
 fn sequence_atomic() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::sequence_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "sequence_atomic",
         tokens: [
             sequence_atomic(0, 6)
         ]
@@ -152,9 +156,9 @@ fn sequence_atomic() {
 #[test]
 fn sequence_non_atomic() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc   abc"),
-        rule: Rule::sequence_non_atomic,
+        parser: vm(),
+        input: "abc   abc",
+        rule: "sequence_non_atomic",
         tokens: [
             sequence_non_atomic(0, 9, [
                 sequence(0, 9, [
@@ -170,9 +174,9 @@ fn sequence_non_atomic() {
 #[should_panic]
 fn sequence_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::sequence_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "sequence_atomic",
         tokens: []
     };
 }
@@ -180,9 +184,9 @@ fn sequence_atomic_space() {
 #[test]
 fn sequence_atomic_compound() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::sequence_atomic_compound,
+        parser: vm(),
+        input: "abcabc",
+        rule: "sequence_atomic_compound",
         tokens: [
             sequence_atomic_compound(0, 6, [
                 sequence_compound(0, 6, [
@@ -197,9 +201,9 @@ fn sequence_atomic_compound() {
 #[test]
 fn sequence_compound_nested() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::sequence_compound_nested,
+        parser: vm(),
+        input: "abcabc",
+        rule: "sequence_compound_nested",
         tokens: [
             sequence_compound_nested(0, 6, [
                 sequence_nested(0, 6, [
@@ -215,9 +219,9 @@ fn sequence_compound_nested() {
 #[should_panic]
 fn sequence_compound_nested_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::sequence_compound_nested,
+        parser: vm(),
+        input: "abc abc",
+        rule: "sequence_compound_nested",
         tokens: []
     };
 }
@@ -225,9 +229,9 @@ fn sequence_compound_nested_space() {
 #[test]
 fn choice_string() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::choice,
+        parser: vm(),
+        input: "abc",
+        rule: "choice",
         tokens: [
             choice(0, 3, [
                 string(0, 3)
@@ -239,9 +243,9 @@ fn choice_string() {
 #[test]
 fn choice_range() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0"),
-        rule: Rule::choice,
+        parser: vm(),
+        input: "0",
+        rule: "choice",
         tokens: [
             choice(0, 1, [
                 range(0, 1)
@@ -253,9 +257,9 @@ fn choice_range() {
 #[test]
 fn optional_string() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::optional,
+        parser: vm(),
+        input: "abc",
+        rule: "optional",
         tokens: [
             optional(0, 3, [
                 string(0, 3)
@@ -267,9 +271,9 @@ fn optional_string() {
 #[test]
 fn optional_empty() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::optional,
+        parser: vm(),
+        input: "",
+        rule: "optional",
         tokens: [
             optional(0, 0)
         ]
@@ -279,9 +283,9 @@ fn optional_empty() {
 #[test]
 fn repeat_empty() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::repeat,
+        parser: vm(),
+        input: "",
+        rule: "repeat",
         tokens: [
             repeat(0, 0)
         ]
@@ -291,9 +295,9 @@ fn repeat_empty() {
 #[test]
 fn repeat_strings() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc   abc"),
-        rule: Rule::repeat,
+        parser: vm(),
+        input: "abc   abc",
+        rule: "repeat",
         tokens: [
             repeat(0, 9, [
                 string(0, 3),
@@ -306,9 +310,9 @@ fn repeat_strings() {
 #[test]
 fn repeat_atomic_empty() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::repeat_atomic,
+        parser: vm(),
+        input: "",
+        rule: "repeat_atomic",
         tokens: [
             repeat_atomic(0, 0)
         ]
@@ -318,9 +322,9 @@ fn repeat_atomic_empty() {
 #[test]
 fn repeat_atomic_strings() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::repeat_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "repeat_atomic",
         tokens: [
             repeat_atomic(0, 6)
         ]
@@ -331,9 +335,9 @@ fn repeat_atomic_strings() {
 #[should_panic]
 fn repeat_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_atomic",
         tokens: []
     };
 }
@@ -342,9 +346,9 @@ fn repeat_atomic_space() {
 #[should_panic]
 fn repeat_once_empty() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::repeat_once,
+        parser: vm(),
+        input: "",
+        rule: "repeat_once",
         tokens: []
     };
 }
@@ -352,9 +356,9 @@ fn repeat_once_empty() {
 #[test]
 fn repeat_once_strings() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc   abc"),
-        rule: Rule::repeat_once,
+        parser: vm(),
+        input: "abc   abc",
+        rule: "repeat_once",
         tokens: [
             repeat_once(0, 9, [
                 string(0, 3),
@@ -368,9 +372,9 @@ fn repeat_once_strings() {
 #[should_panic]
 fn repeat_once_atomic_empty() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from(""),
-        rule: Rule::repeat_once_atomic,
+        parser: vm(),
+        input: "",
+        rule: "repeat_once_atomic",
         tokens: []
     };
 }
@@ -378,9 +382,9 @@ fn repeat_once_atomic_empty() {
 #[test]
 fn repeat_once_atomic_strings() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::repeat_once_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "repeat_once_atomic",
         tokens: [
             repeat_once_atomic(0, 6)
         ]
@@ -391,9 +395,9 @@ fn repeat_once_atomic_strings() {
 #[should_panic]
 fn repeat_once_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_once_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_once_atomic",
         tokens: []
     };
 }
@@ -401,9 +405,9 @@ fn repeat_once_atomic_space() {
 #[test]
 fn repeat_min_max_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_min_max,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_min_max",
         tokens: [
             repeat_min_max(0, 7, [
                 string(0, 3),
@@ -416,9 +420,9 @@ fn repeat_min_max_twice() {
 #[test]
 fn repeat_min_max_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc abc"),
-        rule: Rule::repeat_min_max,
+        parser: vm(),
+        input: "abc abc abc",
+        rule: "repeat_min_max",
         tokens: [
             repeat_min_max(0, 11, [
                 string(0, 3),
@@ -432,9 +436,9 @@ fn repeat_min_max_thrice() {
 #[test]
 fn repeat_min_max_atomic_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::repeat_min_max_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "repeat_min_max_atomic",
         tokens: [
             repeat_min_max_atomic(0, 6)
         ]
@@ -444,9 +448,9 @@ fn repeat_min_max_atomic_twice() {
 #[test]
 fn repeat_min_max_atomic_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabcabc"),
-        rule: Rule::repeat_min_max_atomic,
+        parser: vm(),
+        input: "abcabcabc",
+        rule: "repeat_min_max_atomic",
         tokens: [
             repeat_min_max_atomic(0, 9)
         ]
@@ -457,9 +461,9 @@ fn repeat_min_max_atomic_thrice() {
 #[should_panic]
 fn repeat_min_max_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_min_max_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_min_max_atomic",
         tokens: []
     };
 }
@@ -467,9 +471,9 @@ fn repeat_min_max_atomic_space() {
 #[test]
 fn repeat_exact() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_exact,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_exact",
         tokens: [
             repeat_exact(0, 7, [
                 string(0, 3),
@@ -483,9 +487,9 @@ fn repeat_exact() {
 #[should_panic]
 fn repeat_min_once() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::repeat_min,
+        parser: vm(),
+        input: "abc",
+        rule: "repeat_min",
         tokens: []
     };
 }
@@ -493,9 +497,9 @@ fn repeat_min_once() {
 #[test]
 fn repeat_min_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_min,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_min",
         tokens: [
             repeat_min(0, 7, [
                 string(0, 3),
@@ -508,9 +512,9 @@ fn repeat_min_twice() {
 #[test]
 fn repeat_min_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc  abc"),
-        rule: Rule::repeat_min,
+        parser: vm(),
+        input: "abc abc  abc",
+        rule: "repeat_min",
         tokens: [
             repeat_min(0, 12, [
                 string(0, 3),
@@ -525,9 +529,9 @@ fn repeat_min_thrice() {
 #[should_panic]
 fn repeat_min_atomic_once() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::repeat_min_atomic,
+        parser: vm(),
+        input: "abc",
+        rule: "repeat_min_atomic",
         tokens: []
     };
 }
@@ -535,9 +539,9 @@ fn repeat_min_atomic_once() {
 #[test]
 fn repeat_min_atomic_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::repeat_min_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "repeat_min_atomic",
         tokens: [
             repeat_min_atomic(0, 6)
         ]
@@ -547,9 +551,9 @@ fn repeat_min_atomic_twice() {
 #[test]
 fn repeat_min_atomic_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabcabc"),
-        rule: Rule::repeat_min_atomic,
+        parser: vm(),
+        input: "abcabcabc",
+        rule: "repeat_min_atomic",
         tokens: [
             repeat_min_atomic(0, 9)
         ]
@@ -560,9 +564,9 @@ fn repeat_min_atomic_thrice() {
 #[should_panic]
 fn repeat_min_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_min_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_min_atomic",
         tokens: []
     };
 }
@@ -570,9 +574,9 @@ fn repeat_min_atomic_space() {
 #[test]
 fn repeat_max_once() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::repeat_max,
+        parser: vm(),
+        input: "abc",
+        rule: "repeat_max",
         tokens: [
             repeat_max(0, 3, [
                 string(0, 3)
@@ -584,9 +588,9 @@ fn repeat_max_once() {
 #[test]
 fn repeat_max_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_max,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_max",
         tokens: [
             repeat_max(0, 7, [
                 string(0, 3),
@@ -600,9 +604,9 @@ fn repeat_max_twice() {
 #[should_panic]
 fn repeat_max_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_max,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_max",
         tokens: []
     };
 }
@@ -610,9 +614,9 @@ fn repeat_max_thrice() {
 #[test]
 fn repeat_max_atomic_once() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::repeat_max_atomic,
+        parser: vm(),
+        input: "abc",
+        rule: "repeat_max_atomic",
         tokens: [
             repeat_max_atomic(0, 3)
         ]
@@ -622,9 +626,9 @@ fn repeat_max_atomic_once() {
 #[test]
 fn repeat_max_atomic_twice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabc"),
-        rule: Rule::repeat_max_atomic,
+        parser: vm(),
+        input: "abcabc",
+        rule: "repeat_max_atomic",
         tokens: [
             repeat_max_atomic(0, 6)
         ]
@@ -635,9 +639,9 @@ fn repeat_max_atomic_twice() {
 #[should_panic]
 fn repeat_max_atomic_thrice() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abcabcabc"),
-        rule: Rule::repeat_max_atomic,
+        parser: vm(),
+        input: "abcabcabc",
+        rule: "repeat_max_atomic",
         tokens: []
     };
 }
@@ -646,9 +650,9 @@ fn repeat_max_atomic_thrice() {
 #[should_panic]
 fn repeat_max_atomic_space() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc abc"),
-        rule: Rule::repeat_max_atomic,
+        parser: vm(),
+        input: "abc abc",
+        rule: "repeat_max_atomic",
         tokens: []
     };
 }
@@ -656,9 +660,9 @@ fn repeat_max_atomic_space() {
 #[test]
 fn repeat_comment() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc$$$ $$$abc"),
-        rule: Rule::repeat_once,
+        parser: vm(),
+        input: "abc$$$ $$$abc",
+        rule: "repeat_once",
         tokens: [
             repeat_once(0, 13, [
                 string(0, 3),
@@ -671,9 +675,9 @@ fn repeat_comment() {
 #[test]
 fn soi_at_start() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("abc"),
-        rule: Rule::soi_at_start,
+        parser: vm(),
+        input: "abc",
+        rule: "soi_at_start",
         tokens: [
             soi_at_start(0, 3, [
                 string(0, 3)
@@ -685,9 +689,9 @@ fn soi_at_start() {
 #[test]
 fn peek() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0111"),
-        rule: Rule::peek_,
+        parser: vm(),
+        input: "0111",
+        rule: "peek_",
         tokens: [
             peek_(0, 4, [
                 range(0, 1),
@@ -700,9 +704,9 @@ fn peek() {
 #[test]
 fn peek_all() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0110"),
-        rule: Rule::peek_all,
+        parser: vm(),
+        input: "0110",
+        rule: "peek_all",
         tokens: [
             peek_all(0, 4, [
                 range(0, 1),
@@ -715,9 +719,9 @@ fn peek_all() {
 #[test]
 fn peek_slice_23() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0123412"),
-        rule: Rule::peek_slice_23,
+        parser: vm(),
+        input: "0123412",
+        rule: "peek_slice_23",
         tokens: [
             peek_slice_23(0, 7, [
                 range(0, 1),
@@ -733,9 +737,9 @@ fn peek_slice_23() {
 #[test]
 fn pop() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0110"),
-        rule: Rule::pop_,
+        parser: vm(),
+        input: "0110",
+        rule: "pop_",
         tokens: [
             pop_(0, 4, [
                 range(0, 1),
@@ -748,9 +752,9 @@ fn pop() {
 #[test]
 fn pop_all() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("0110"),
-        rule: Rule::pop_all,
+        parser: vm(),
+        input: "0110",
+        rule: "pop_all",
         tokens: [
             pop_all(0, 4, [
                 range(0, 1),
@@ -763,9 +767,9 @@ fn pop_all() {
 #[test]
 fn pop_fail() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("010"),
-        rule: Rule::pop_fail,
+        parser: vm(),
+        input: "010",
+        rule: "pop_fail",
         tokens: [
             pop_fail(0, 3, [
                 range(0, 1),
@@ -778,9 +782,9 @@ fn pop_fail() {
 #[test]
 fn repeat_mutate_stack() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("a,b,c,cba"),
-        rule: Rule::repeat_mutate_stack,
+        parser: vm(),
+        input: "a,b,c,cba",
+        rule: "repeat_mutate_stack",
         tokens: [
             repeat_mutate_stack(0, 9)
         ]
@@ -788,25 +792,11 @@ fn repeat_mutate_stack() {
 }
 
 #[test]
-fn stack_resume_after_fail() {
-    parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("a,b,c,cba"),
-        rule: Rule::stack_resume_after_fail,
-        tokens: [
-            stack_resume_after_fail(0, 9, [
-                repeat_mutate_stack_pop_all(0, 9)
-            ])
-        ]
-    };
-}
-
-#[test]
 fn checkpoint_restore() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("a"),
-        rule: Rule::checkpoint_restore,
+        parser: vm(),
+        input: "a",
+        rule: "checkpoint_restore",
         tokens: [
             checkpoint_restore(0, 1, [EOI(1, 1)])
         ]
@@ -816,9 +806,9 @@ fn checkpoint_restore() {
 #[test]
 fn ascii_digits() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("6"),
-        rule: Rule::ascii_digits,
+        parser: vm(),
+        input: "6",
+        rule: "ascii_digits",
         tokens: [
             ascii_digits(0, 1)
         ]
@@ -828,9 +818,9 @@ fn ascii_digits() {
 #[test]
 fn ascii_nonzero_digits() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("5"),
-        rule: Rule::ascii_nonzero_digits,
+        parser: vm(),
+        input: "5",
+        rule: "ascii_nonzero_digits",
         tokens: [
             ascii_nonzero_digits(0, 1)
         ]
@@ -840,9 +830,9 @@ fn ascii_nonzero_digits() {
 #[test]
 fn ascii_bin_digits() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("1"),
-        rule: Rule::ascii_bin_digits,
+        parser: vm(),
+        input: "1",
+        rule: "ascii_bin_digits",
         tokens: [
             ascii_bin_digits(0, 1)
         ]
@@ -852,9 +842,9 @@ fn ascii_bin_digits() {
 #[test]
 fn ascii_oct_digits() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("3"),
-        rule: Rule::ascii_oct_digits,
+        parser: vm(),
+        input: "3",
+        rule: "ascii_oct_digits",
         tokens: [
             ascii_oct_digits(0, 1)
         ]
@@ -864,9 +854,9 @@ fn ascii_oct_digits() {
 #[test]
 fn ascii_hex_digits() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("6bC"),
-        rule: Rule::ascii_hex_digits,
+        parser: vm(),
+        input: "6bC",
+        rule: "ascii_hex_digits",
         tokens: [
             ascii_hex_digits(0, 3)
         ]
@@ -876,9 +866,9 @@ fn ascii_hex_digits() {
 #[test]
 fn ascii_alpha_lowers() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("a"),
-        rule: Rule::ascii_alpha_lowers,
+        parser: vm(),
+        input: "a",
+        rule: "ascii_alpha_lowers",
         tokens: [
             ascii_alpha_lowers(0, 1)
         ]
@@ -888,9 +878,9 @@ fn ascii_alpha_lowers() {
 #[test]
 fn ascii_alpha_uppers() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("K"),
-        rule: Rule::ascii_alpha_uppers,
+        parser: vm(),
+        input: "K",
+        rule: "ascii_alpha_uppers",
         tokens: [
             ascii_alpha_uppers(0, 1)
         ]
@@ -900,9 +890,9 @@ fn ascii_alpha_uppers() {
 #[test]
 fn ascii_alphas() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("wF"),
-        rule: Rule::ascii_alphas,
+        parser: vm(),
+        input: "wF",
+        rule: "ascii_alphas",
         tokens: [
             ascii_alphas(0, 2)
         ]
@@ -912,9 +902,9 @@ fn ascii_alphas() {
 #[test]
 fn ascii_alphanumerics() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("4jU"),
-        rule: Rule::ascii_alphanumerics,
+        parser: vm(),
+        input: "4jU",
+        rule: "ascii_alphanumerics",
         tokens: [
             ascii_alphanumerics(0, 3)
         ]
@@ -924,9 +914,9 @@ fn ascii_alphanumerics() {
 #[test]
 fn asciis() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("x02"),
-        rule: Rule::asciis,
+        parser: vm(),
+        input: "x02",
+        rule: "asciis",
         tokens: [
             asciis(0, 3)
         ]
@@ -936,9 +926,9 @@ fn asciis() {
 #[test]
 fn newline() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("\n\r\n\r"),
-        rule: Rule::newline,
+        parser: vm(),
+        input: "\n\r\n\r",
+        rule: "newline",
         tokens: [
             newline(0, 4)
         ]
@@ -948,9 +938,9 @@ fn newline() {
 #[test]
 fn unicode() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("نامهای"),
-        rule: Rule::unicode,
+        parser: vm(),
+        input: "نامهای",
+        rule: "unicode",
         tokens: [
             unicode(0, 12)
         ]
@@ -960,9 +950,9 @@ fn unicode() {
 #[test]
 fn shadowing() {
     parses_to! {
-        parser: GrammarParser,
-        input: Arc::from("shadows builtin"),
-        rule: Rule::SYMBOL,
+        parser: vm(),
+        input: "shadows builtin",
+        rule: "SYMBOL",
         tokens: [
             SYMBOL(0, 15)
         ]

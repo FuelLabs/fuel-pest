@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -7,26 +7,30 @@
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-extern crate alloc;
-use alloc::{format, vec::Vec};
+extern crate pest;
+extern crate pest_meta;
+#[macro_use]
+extern crate pest_vm;
+
 use std::sync::Arc;
+use pest_meta::parser::Rule;
+use pest_meta::{optimizer, parser};
+use pest_vm::Vm;
 
-#[macro_use]
-extern crate fuel_pest;
-#[macro_use]
-extern crate fuel_pest_derive;
+const GRAMMAR: &'static str = include_str!("lists.pest");
 
-#[derive(Parser)]
-#[grammar = "../tests/lists.pest"]
-struct ListsParser;
+fn vm() -> Vm {
+    let pairs = parser::parse(Rule::grammar_rules, Arc::from(GRAMMAR)).unwrap();
+    let ast = parser::consume_rules(pairs).unwrap();
+    Vm::new(optimizer::optimize(ast))
+}
 
 #[test]
 fn item() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a",
+        rule: "lists",
         tokens: [
             item(2, 3)
         ]
@@ -36,9 +40,9 @@ fn item() {
 #[test]
 fn items() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a\n- b"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a\n- b",
+        rule: "lists",
         tokens: [
             item(2, 3),
             item(6, 7)
@@ -49,9 +53,9 @@ fn items() {
 #[test]
 fn children() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("  - b"),
-        rule: Rule::children,
+        parser: vm(),
+        input: "  - b",
+        rule: "children",
         tokens: [
             children(0, 5, [
                 item(4, 5)
@@ -63,9 +67,9 @@ fn children() {
 #[test]
 fn nested_item() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a\n  - b"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a\n  - b",
+        rule: "lists",
         tokens: [
             item(2, 3),
             children(4, 9, [
@@ -78,9 +82,9 @@ fn nested_item() {
 #[test]
 fn nested_items() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a\n  - b\n  - c"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a\n  - b\n  - c",
+        rule: "lists",
         tokens: [
             item(2, 3),
             children(4, 15, [
@@ -94,9 +98,9 @@ fn nested_items() {
 #[test]
 fn nested_two_levels() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a\n  - b\n    - c"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a\n  - b\n    - c",
+        rule: "lists",
         tokens: [
             item(2, 3),
             children(4, 17, [
@@ -112,9 +116,9 @@ fn nested_two_levels() {
 #[test]
 fn nested_then_not() {
     parses_to! {
-        parser: ListsParser,
-        input: Arc::from("- a\n  - b\n- c"),
-        rule: Rule::lists,
+        parser: vm(),
+        input: "- a\n  - b\n- c",
+        rule: "lists",
         tokens: [
             item(2, 3),
             children(4, 9, [

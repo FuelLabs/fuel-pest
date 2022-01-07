@@ -1014,9 +1014,9 @@ mod tests {
 
                 #[allow(clippy::all)]
                 impl ::fuel_pest::Parser<Rule> for MyParser {
-                    fn parse<'i>(
+                    fn parse(
                         rule: Rule,
-                        input: &'i str
+                        input: ::std::sync::Arc<str>,
                     ) -> #result<
                         ::fuel_pest::iterators::Pairs<Rule>,
                         ::fuel_pest::error::Error<Rule>
