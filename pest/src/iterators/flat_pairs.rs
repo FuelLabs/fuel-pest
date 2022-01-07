@@ -154,9 +154,9 @@ impl<R: Clone> Clone for FlatPairs<R> {
 mod tests {
     use super::super::super::macros::tests::*;
     use super::super::super::Parser;
-    use std::sync::Arc;
     use alloc::vec;
     use alloc::vec::Vec;
+    use std::sync::Arc;
 
     #[test]
     fn iter_for_flat_pairs() {

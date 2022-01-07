@@ -1224,8 +1224,9 @@ mod tests {
 
     #[test]
     fn ast() {
-        let input =
-            Arc::from("rule = _{ a{1} ~ \"a\"{3,} ~ b{, 2} ~ \"b\"{1, 2} | !(^\"c\" | PUSH('d'..'e'))?* }");
+        let input = Arc::from(
+            "rule = _{ a{1} ~ \"a\"{3,} ~ b{, 2} ~ \"b\"{1, 2} | !(^\"c\" | PUSH('d'..'e'))?* }",
+        );
 
         let pairs = PestParser::parse(Rule::grammar_rules, input).unwrap();
         let ast = consume_rules_with_spans(pairs).unwrap();

@@ -441,16 +441,30 @@ mod tests {
     #[test]
     fn empty() {
         let input: Arc<str> = Arc::from("");
-        assert_eq!(Position::new(input.clone(), 0).unwrap().match_string(""), true);
-        assert_eq!(!Position::new(input.clone(), 0).unwrap().match_string("a"), true);
+        assert_eq!(
+            Position::new(input.clone(), 0).unwrap().match_string(""),
+            true
+        );
+        assert_eq!(
+            !Position::new(input.clone(), 0).unwrap().match_string("a"),
+            true
+        );
     }
 
     #[test]
     fn parts() {
         let input: Arc<str> = Arc::from("asdasdf");
 
-        assert_eq!(Position::new(input.clone(), 0).unwrap().match_string("asd"), true);
-        assert_eq!(Position::new(input.clone(), 3).unwrap().match_string("asdf"), true);
+        assert_eq!(
+            Position::new(input.clone(), 0).unwrap().match_string("asd"),
+            true
+        );
+        assert_eq!(
+            Position::new(input.clone(), 3)
+                .unwrap()
+                .match_string("asdf"),
+            true
+        );
     }
 
     #[test]
@@ -562,18 +576,34 @@ mod tests {
     fn match_range() {
         let input: Arc<str> = Arc::from("b");
 
-        assert_eq!(Position::new(input.clone(), 0).unwrap().match_range('a'..'c'), true);
-        assert_eq!(Position::new(input.clone(), 0).unwrap().match_range('b'..'b'), true);
         assert_eq!(
-            !Position::new(input.clone(), 0).unwrap().match_range('a'..'a'),
+            Position::new(input.clone(), 0)
+                .unwrap()
+                .match_range('a'..'c'),
             true
         );
         assert_eq!(
-            !Position::new(input.clone(), 0).unwrap().match_range('c'..'c'),
+            Position::new(input.clone(), 0)
+                .unwrap()
+                .match_range('b'..'b'),
             true
         );
         assert_eq!(
-            Position::new(input.clone(), 0).unwrap().match_range('a'..'嗨'),
+            !Position::new(input.clone(), 0)
+                .unwrap()
+                .match_range('a'..'a'),
+            true
+        );
+        assert_eq!(
+            !Position::new(input.clone(), 0)
+                .unwrap()
+                .match_range('c'..'c'),
+            true
+        );
+        assert_eq!(
+            Position::new(input.clone(), 0)
+                .unwrap()
+                .match_range('a'..'嗨'),
             true
         );
     }
@@ -583,11 +613,15 @@ mod tests {
         let input: Arc<str> = Arc::from("AsdASdF");
 
         assert_eq!(
-            Position::new(input.clone(), 0).unwrap().match_insensitive("asd"),
+            Position::new(input.clone(), 0)
+                .unwrap()
+                .match_insensitive("asd"),
             true
         );
         assert_eq!(
-            Position::new(input.clone(), 3).unwrap().match_insensitive("asdf"),
+            Position::new(input.clone(), 3)
+                .unwrap()
+                .match_insensitive("asdf"),
             true
         );
     }

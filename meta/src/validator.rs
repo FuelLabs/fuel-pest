@@ -128,7 +128,10 @@ pub fn validate_pairs(pairs: Pairs<Rule>) -> Result<Vec<Span>, Vec<Error<Rule>>>
     let mut errors = vec![];
 
     errors.extend(validate_rust_keywords(&definitions, &rust_keywords));
-    errors.extend(validate_fuel_pest_keywords(&definitions, &fuel_pest_keywords));
+    errors.extend(validate_fuel_pest_keywords(
+        &definitions,
+        &fuel_pest_keywords,
+    ));
     errors.extend(validate_already_defined(&definitions));
     errors.extend(validate_undefined(&definitions, &called_rules, &builtins));
 
