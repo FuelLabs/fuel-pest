@@ -77,7 +77,9 @@ impl<R: RuleType> Tokens<R> {
                 Token::Start {
                     rule,
                     // QueueableTokens are safely created.
-                    pos: unsafe { position::Position::new_unchecked(self.input.clone(), input_pos) },
+                    pos: unsafe {
+                        position::Position::new_unchecked(self.input.clone(), input_pos)
+                    },
                 }
             }
             QueueableToken::End {
@@ -86,7 +88,9 @@ impl<R: RuleType> Tokens<R> {
                 Token::End {
                     rule,
                     // QueueableTokens are safely created.
-                    pos: unsafe { position::Position::new_unchecked(self.input.clone(), input_pos) },
+                    pos: unsafe {
+                        position::Position::new_unchecked(self.input.clone(), input_pos)
+                    },
                 }
             }
         }
@@ -135,10 +139,11 @@ mod tests {
     use super::super::super::Parser;
     use super::Token;
     use alloc::vec::Vec;
+    use std::sync::Arc;
 
     #[test]
     fn double_ended_iter_for_tokens() {
-        let pairs = AbcParser::parse(Rule::a, "abcde").unwrap();
+        let pairs = AbcParser::parse(Rule::a, Arc::from("abcde")).unwrap();
         let mut tokens = pairs.clone().tokens().collect::<Vec<Token<Rule>>>();
         tokens.reverse();
         let reverse_tokens = pairs.tokens().rev().collect::<Vec<Token<Rule>>>();

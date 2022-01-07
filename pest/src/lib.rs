@@ -72,12 +72,12 @@ extern crate serde;
 #[cfg(feature = "pretty-print")]
 extern crate serde_json;
 
-use std::fmt::Debug;
-use std::hash::Hash;
 pub use parser::Parser;
 pub use parser_state::{state, Atomicity, Lookahead, MatchDir, ParseResult, ParserState};
 pub use position::Position;
 pub use span::{Lines, Span};
+use std::fmt::Debug;
+use std::hash::Hash;
 pub use token::Token;
 
 pub mod error;
