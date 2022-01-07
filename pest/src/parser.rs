@@ -7,9 +7,9 @@
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
 
-use std::sync::Arc;
 use error::Error;
 use iterators::Pairs;
+use std::sync::Arc;
 use RuleType;
 
 /// A trait with a single method that parses strings.

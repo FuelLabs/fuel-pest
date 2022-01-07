@@ -10,10 +10,7 @@
 #[macro_use]
 extern crate fuel_pest as pest;
 
-use std::{
-    sync::Arc,
-    collections::HashMap,
-};
+use std::{collections::HashMap, sync::Arc};
 
 use pest::error::Error;
 use pest::iterators::{Pair, Pairs};

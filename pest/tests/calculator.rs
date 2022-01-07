@@ -10,11 +10,11 @@
 #[macro_use]
 extern crate fuel_pest as pest;
 
-use std::sync::Arc;
 use pest::error::Error;
 use pest::iterators::{Pair, Pairs};
 use pest::prec_climber::{Assoc, Operator, PrecClimber};
 use pest::{state, ParseResult, Parser, ParserState};
+use std::sync::Arc;
 
 #[allow(dead_code, non_camel_case_types)]
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]

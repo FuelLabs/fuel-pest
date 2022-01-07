@@ -1,8 +1,8 @@
 extern crate fuel_pest as pest;
 
 use std::{
-    sync::Arc,
     io::{self, Write},
+    sync::Arc,
 };
 
 use pest::error::Error;

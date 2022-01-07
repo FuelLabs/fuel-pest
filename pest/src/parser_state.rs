@@ -21,7 +21,6 @@ use span::Span;
 use stack::Stack;
 use RuleType;
 
-
 /// The current lookahead status of a [`ParserState`].
 ///
 /// [`ParserState`]: struct.ParserState.html

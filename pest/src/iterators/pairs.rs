@@ -141,7 +141,7 @@ impl<R: RuleType> Pairs<R> {
     /// let pairs = pest::state(input, |state| {
     ///     // generating nested Token pair with Rule::b inside Rule::a
     /// #     state.rule(Rule::a, |state| {
-/// #         state.rule(Rule::b, |s| Ok(s))
+    /// #         state.rule(Rule::b, |s| Ok(s))
     /// #     })
     /// }).unwrap();
     /// let tokens: Vec<_> = pairs.flatten().tokens().collect();
@@ -309,11 +309,11 @@ impl<R: RuleType> ::serde::Serialize for Pairs<R> {
 mod tests {
     use super::super::super::macros::tests::*;
     use super::super::super::Parser;
-    use std::sync::Arc;
     use alloc::borrow::ToOwned;
     use alloc::format;
     use alloc::vec;
     use alloc::vec::Vec;
+    use std::sync::Arc;
 
     #[test]
     #[cfg(feature = "pretty-print")]

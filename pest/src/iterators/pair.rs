@@ -360,7 +360,10 @@ mod tests {
     #[test]
     #[cfg(feature = "pretty-print")]
     fn test_pretty_print() {
-        let pair = AbcParser::parse(Rule::a, Arc::from("abcde")).unwrap().next().unwrap();
+        let pair = AbcParser::parse(Rule::a, Arc::from("abcde"))
+            .unwrap()
+            .next()
+            .unwrap();
 
         let expected = r#"{
   "pos": [
@@ -391,7 +394,10 @@ mod tests {
 
     #[test]
     fn pair_into_inner() {
-        let pair = AbcParser::parse(Rule::a, Arc::from("abcde")).unwrap().next().unwrap(); // the tokens a(b())
+        let pair = AbcParser::parse(Rule::a, Arc::from("abcde"))
+            .unwrap()
+            .next()
+            .unwrap(); // the tokens a(b())
 
         let pairs = pair.into_inner(); // the tokens b()
 
