@@ -8,7 +8,7 @@
 // modified, or distributed except according to those terms.
 
 #[macro_use]
-extern crate pest;
+extern crate fuel_pest as pest;
 
 use pest::error::Error;
 use pest::iterators::{Pair, Pairs};

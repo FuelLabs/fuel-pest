@@ -14,7 +14,7 @@ use alloc::{format, vec::Vec};
 #[macro_use]
 extern crate pest;
 #[macro_use]
-extern crate pest_derive;
+extern crate fuel_pest_derive as pest_derive;
 
 #[derive(Parser)]
 #[grammar = "../tests/grammar.pest"]

@@ -1,4 +1,4 @@
-extern crate pest;
+extern crate fuel_pest as pest;
 
 use std::io::{self, Write};
 
