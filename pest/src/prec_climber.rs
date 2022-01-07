@@ -14,6 +14,8 @@ use alloc::boxed::Box;
 use alloc::vec::Vec;
 use std::iter::Peekable;
 use std::ops::BitOr;
+#[cfg(test)]
+use crate as pest;
 
 use iterators::Pair;
 use RuleType;

@@ -141,7 +141,7 @@ impl<R: RuleType> Pairs<R> {
     /// let pairs = pest::state(input, |state| {
     ///     // generating nested Token pair with Rule::b inside Rule::a
     /// #     state.rule(Rule::a, |state| {
-    /// #         state.rule(Rule::b, |s| Ok(s))
+/// #         state.rule(Rule::b, |s| Ok(s))
     /// #     })
     /// }).unwrap();
     /// let tokens: Vec<_> = pairs.flatten().tokens().collect();

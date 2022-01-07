@@ -1,5 +1,5 @@
 [package]
-name = "fuel-pest_grammars"
+name = "pest_grammars"
 description = "pest popular grammar implementations"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
