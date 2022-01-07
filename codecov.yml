@@ -2,5 +2,5 @@ comment: off
 
 ignore:
  - derive/src/lib.rs
- - fuel-pest/examples/parens.rs
- - fuel-pest/src/unicode/*
+ - pest/examples/parens.rs
+ - pest/src/unicode/*

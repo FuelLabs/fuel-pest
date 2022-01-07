@@ -1,4 +1,4 @@
-name: fuel-pest Continuous Integration
+name: pest Continuous Integration
 
 on:
   push:
