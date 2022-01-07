@@ -1,28 +1,26 @@
 [package]
-name = "fuel_pest_derive"
-description = "fuel_pest's derive macro"
+name = "fuel_generator"
+description = "fuel_pest code generator"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
 homepage = "https://fuel_pest-parser.github.io/"
 repository = "https://github.com/fuel_pest-parser/fuel_pest"
 documentation = "https://docs.rs/fuel_pest"
-keywords = ["fuel_pest", "parser", "peg", "grammar"]
+keywords = ["fuel_pest", "generator"]
 categories = ["parsing"]
 license = "MIT/Apache-2.0"
 readme = "_README.md"
 
-[lib]
-name = "fuel_pest_derive"
-proc-macro = true
-
 [features]
 default = ["std"]
-std = ["fuel-pest/std", "fuel_generator/std"]
+std = ["fuel-pest/std"]
 
 [dependencies]
-# for tests, included transitively anyway
-fuel-pest = { path = "../fuel-pest", version = "3.0.3", default-features = false }
-fuel_generator = { path = "../fuel-generator", version = "3.0.3", default-features = false }
+fuel-pest = { path = "../pest", version = "3.0.3", default-features = false }
+fuel_pest_meta = { path = "../meta", version = "3.0.3" }
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = "1.0"
 
 [badges]
 codecov = { repository = "fuel_pest-parser/fuel_pest" }

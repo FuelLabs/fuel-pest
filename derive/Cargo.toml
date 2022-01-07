@@ -1,26 +1,30 @@
 [package]
-name = "fuel_pest_meta"
-description = "fuel_pest meta language parser and validator"
+name = "fuel_pest_derive"
+description = "fuel_pest's derive macro"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
 homepage = "https://fuel_pest-parser.github.io/"
 repository = "https://github.com/fuel_pest-parser/fuel_pest"
 documentation = "https://docs.rs/fuel_pest"
-keywords = ["fuel_pest", "parser", "meta", "optimizer"]
+keywords = ["fuel_pest", "parser", "peg", "grammar"]
 categories = ["parsing"]
 license = "MIT/Apache-2.0"
 readme = "_README.md"
-exclude = ["src/grammar.pest"]
-include = ["Cargo.toml", "src/**/*", "src/grammar.rs", "_README.md", "LICENSE-*"]
+
+[lib]
+name = "fuel_pest_derive"
+proc-macro = true
+
+[features]
+default = ["std"]
+std = ["fuel-pest/std", "fuel_generator/std"]
 
 [dependencies]
-maplit = "1.0"
-fuel-pest = { path = "../fuel-pest", version = "3.0.3" }
+# for tests, included transitively anyway
+fuel-pest = { path = "../pest", version = "3.0.3", default-features = false }
+fuel_generator = { path = "../generator", version = "3.0.3", default-features = false }
 
 [badges]
 codecov = { repository = "fuel_pest-parser/fuel_pest" }
 maintenance = { status = "actively-developed" }
 travis-ci = { repository = "fuel_pest-parser/fuel_pest" }
-
-[build-dependencies]
-sha-1 = { version = "0.9", default-features = false }

@@ -76,7 +76,7 @@ jobs:
           ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} fuel-pest/Cargo.toml
           ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} fuel-derive/Cargo.toml
           ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} fuel-generator/Cargo.toml
-          ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} fuel-meta/Cargo.toml
+          ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} meta/Cargo.toml
           ./.github/workflows/scripts/verify_tag.sh ${{ github.ref_name }} fuel-pest-bootstrap/Cargo.toml
       - name: Publish crate
         uses: katyo/publish-crates@v1

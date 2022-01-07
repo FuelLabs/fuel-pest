@@ -1,9 +1,9 @@
 [workspace]
 members = [
-    "fuel-pest-bootstrap",
-    "fuel-derive",
-    "fuel-generator",
-    "fuel-grammars",
-    "fuel-meta",
-    "fuel-pest",
+    "bootstrap",
+    "derive",
+    "generator",
+    "grammars",
+    "meta",
+    "pest",
 ]
