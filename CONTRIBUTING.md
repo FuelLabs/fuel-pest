@@ -15,6 +15,7 @@ With that out of the way, let's go through *pest's* crate structure:
   * `generator` - generates code from an AST
 * `vm` - run ASTs on-the-fly and is used by the fiddle and debugger
 
+
 ## Where to start
 
 It's always a good practice to start with something that drives you, but if you're not inspired at the moment, you can go for a [good-first-issue]. These are the kind of issues more tailored to people with less *pest* experience, but they are not necessarily easier; they can offer a fair challenge.
@@ -45,3 +46,4 @@ Our [website] and [book] are in constant need of attention. While not as well or
 Sometimes it's best to just say what you want. For that, there's our [Gitter] room. Leave feedback, help out, learn what people are up to, go off-topic for hours, or complain that compile times are terrible—seriously, please don't.
 
 [Gitter]: https://gitter.im/pest-parser/pest
+
