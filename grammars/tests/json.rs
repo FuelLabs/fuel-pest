@@ -9,7 +9,7 @@
 
 #[macro_use]
 extern crate pest;
-extern crate pest_grammars;
+extern crate fuel_pest_grammars as pest_grammars;
 
 use std::fs::File;
 use std::io::Read;

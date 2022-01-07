@@ -21,8 +21,6 @@ use span::Span;
 use stack::Stack;
 use RuleType;
 
-#[cfg(test)]
-use crate as pest;
 
 /// The current lookahead status of a [`ParserState`].
 ///

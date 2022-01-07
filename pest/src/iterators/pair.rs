@@ -25,8 +25,6 @@ use super::queueable_token::QueueableToken;
 use super::tokens::{self, Tokens};
 use span::{self, Span};
 use RuleType;
-#[cfg(test)]
-use crate as pest;
 
 /// A matching pair of [`Token`]s and everything between them.
 ///

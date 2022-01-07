@@ -11,8 +11,6 @@ use std::fmt;
 use std::hash::{Hash, Hasher};
 use std::str;
 use std::sync::Arc;
-#[cfg(test)]
-use crate as pest;
 
 use position;
 

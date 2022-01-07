@@ -1,5 +1,5 @@
 [package]
-name = "pest_grammars"
+name = "fuel-pest_grammars"
 description = "pest popular grammar implementations"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
@@ -19,3 +19,4 @@ pest_derive = { path = "../derive", version = "3.0.3", package = "fuel-pest_deri
 codecov = { repository = "pest-parser/pest" }
 maintenance = { status = "actively-developed" }
 travis-ci = { repository = "pest-parser/pest" }
+

@@ -20,8 +20,6 @@ use std::fmt;
 use std::mem;
 #[cfg(test)]
 use std::sync::Arc;
-#[allow(dead_code)]
-use crate as pest;
 
 use position::Position;
 use span::Span;
