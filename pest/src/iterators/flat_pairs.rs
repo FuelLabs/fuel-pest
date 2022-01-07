@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -55,7 +55,7 @@ impl<R: RuleType> FlatPairs<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -63,7 +63,7 @@ impl<R: RuleType> FlatPairs<R> {
     /// }
     ///
     /// let input = "";
-    /// let pairs = fuel_pest::state(input, |state| {
+    /// let pairs = pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap();

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -12,9 +12,9 @@ extern crate alloc;
 use alloc::{format, vec::Vec};
 
 #[macro_use]
-extern crate fuel_pest;
+extern crate pest;
 #[macro_use]
-extern crate fuel_pest_derive;
+extern crate pest_derive;
 
 #[derive(Parser)]
 #[grammar = "../tests/grammar.pest"]

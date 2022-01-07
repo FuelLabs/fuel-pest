@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -78,8 +78,8 @@ impl<R: RuleType> Error<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::{Error, ErrorVariant};
-    /// # use fuel_pest::Position;
+    /// # use pest::error::{Error, ErrorVariant};
+    /// # use pest::Position;
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -116,8 +116,8 @@ impl<R: RuleType> Error<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::{Error, ErrorVariant};
-    /// # use fuel_pest::{Position, Span};
+    /// # use pest::error::{Error, ErrorVariant};
+    /// # use pest::{Position, Span};
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -171,8 +171,8 @@ impl<R: RuleType> Error<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::{Error, ErrorVariant};
-    /// # use fuel_pest::Position;
+    /// # use pest::error::{Error, ErrorVariant};
+    /// # use pest::Position;
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -201,8 +201,8 @@ impl<R: RuleType> Error<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::{Error, ErrorVariant};
-    /// # use fuel_pest::Position;
+    /// # use pest::error::{Error, ErrorVariant};
+    /// # use pest::Position;
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -236,8 +236,8 @@ impl<R: RuleType> Error<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::{Error, ErrorVariant};
-    /// # use fuel_pest::Position;
+    /// # use pest::error::{Error, ErrorVariant};
+    /// # use pest::Position;
     /// # #[allow(non_camel_case_types)]
     /// # #[allow(dead_code)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -476,7 +476,7 @@ impl<R: RuleType> ErrorVariant<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::error::ErrorVariant;
+    /// # use pest::error::ErrorVariant;
     /// let variant = ErrorVariant::<()>::CustomError {
     ///     message: String::from("unexpected error")
     /// };

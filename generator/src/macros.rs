@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -20,7 +20,7 @@ macro_rules! generate_rule {
         quote! {
             #[inline]
             #[allow(dead_code, non_snake_case, unused_variables)]
-            pub fn $name(state: ::std::boxed::Box<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<::std::boxed::Box<::fuel_pest::ParserState<Rule>>> {
+            pub fn $name(state: ::std::boxed::Box<::pest::ParserState<Rule>>) -> ::pest::ParseResult<::std::boxed::Box<::pest::ParserState<Rule>>> {
                 $pattern
             }
         }
@@ -33,7 +33,7 @@ macro_rules! generate_rule {
         quote! {
             #[inline]
             #[allow(dead_code, non_snake_case, unused_variables)]
-            pub fn $name(state: ::alloc::boxed::Box<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<::alloc::boxed::Box<::fuel_pest::ParserState<Rule>>> {
+            pub fn $name(state: ::alloc::boxed::Box<::pest::ParserState<Rule>>) -> ::pest::ParseResult<::alloc::boxed::Box<::pest::ParserState<Rule>>> {
                 $pattern
             }
         }

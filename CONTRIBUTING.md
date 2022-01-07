@@ -1,4 +1,4 @@
-# Contributing to fuel-pest
+# Contributing to pest
 
 ## Getting to know the project
 
@@ -14,7 +14,6 @@ With that out of the way, let's go through *fuel-pest's* crate structure:
   * `meta` - parses, validates, optimizes, and converts grammars to ASTs
   * `generator` - generates code from an AST
 * `vm` - run ASTs on-the-fly and is used by the fiddle and debugger
-
 
 ## Where to start
 
@@ -46,4 +45,3 @@ Our [website] and [book] are in constant need of attention. While not as well or
 Sometimes it's best to just say what you want. For that, there's our [Gitter] room. Leave feedback, help out, learn what people are up to, go off-topic for hours, or complain that compile times are terrible—seriously, please don't.
 
 [Gitter]: https://gitter.im/fuel-pest-parser/fuel-pest
-

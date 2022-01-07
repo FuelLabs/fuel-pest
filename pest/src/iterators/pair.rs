@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -67,7 +67,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -75,7 +75,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();
@@ -96,7 +96,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -104,7 +104,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -126,7 +126,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -134,7 +134,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -153,7 +153,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -161,7 +161,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::ab ...
     /// #     state.rule(Rule::ab, |s| s.match_string("ab"))
     /// }).unwrap().next().unwrap();
@@ -183,7 +183,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -191,7 +191,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();
@@ -211,7 +211,7 @@ impl<R: RuleType> Pair<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -219,7 +219,7 @@ impl<R: RuleType> Pair<R> {
     /// }
     ///
     /// let input = "";
-    /// let pair = fuel_pest::state(input, |state| {
+    /// let pair = pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().next().unwrap();

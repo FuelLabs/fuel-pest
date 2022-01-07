@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -7,17 +7,17 @@
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
 
-//! # fuel_pest grammars
+//! # pest grammars
 //!
 //! Contains a series of default grammars.
 
-#![doc(html_root_url = "https://docs.rs/fuel_pest_grammars")]
+#![doc(html_root_url = "https://docs.rs/pest_grammars")]
 
-extern crate fuel_pest;
+extern crate pest;
 #[macro_use]
-extern crate fuel_pest_derive;
+extern crate pest_derive;
 
-pub use fuel_pest::Parser;
+pub use pest::Parser;
 
 pub mod json {
     /// JSON parser.

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -11,9 +11,9 @@ use proc_macro2::{Span, TokenStream};
 use quote::{ToTokens, TokenStreamExt};
 use syn::{self, Generics, Ident};
 
-use fuel_pest_meta::ast::*;
-use fuel_pest_meta::optimizer::*;
-use fuel_pest_meta::UNICODE_PROPERTY_NAMES;
+use pest_meta::ast::*;
+use pest_meta::optimizer::*;
+use pest_meta::UNICODE_PROPERTY_NAMES;
 
 #[allow(clippy::needless_pass_by_value)]
 pub fn generate(
@@ -54,13 +54,13 @@ pub fn generate(
 
     let parser_impl = quote! {
         #[allow(clippy::all)]
-        impl #impl_generics ::fuel_pest::Parser<Rule> for #name #ty_generics #where_clause {
+        impl #impl_generics ::pest::Parser<Rule> for #name #ty_generics #where_clause {
             fn parse(
                 rule: Rule,
                 input: ::std::sync::Arc<str>,
             ) -> #result<
-                ::fuel_pest::iterators::Pairs<Rule>,
-                ::fuel_pest::error::Error<Rule>
+                ::pest::iterators::Pairs<Rule>,
+                ::pest::error::Error<Rule>
             > {
                 mod rules {
                     #![allow(clippy::upper_case_acronyms)]
@@ -77,7 +77,7 @@ pub fn generate(
                     pub use self::visible::*;
                 }
 
-                ::fuel_pest::state(::std::sync::Arc::from(input), |state| {
+                ::pest::state(::std::sync::Arc::from(input), |state| {
                     match rule {
                         #patterns
                     }
@@ -93,7 +93,7 @@ pub fn generate(
     }
 }
 
-// Note: All builtin rules should be validated as fuel_pest builtins in meta/src/validator.rs.
+// Note: All builtin rules should be validated as pest builtins in meta/src/validator.rs.
 // Some should also be keywords.
 fn generate_builtin_rules() -> Vec<(&'static str, TokenStream)> {
     let mut builtins = Vec::new();
@@ -158,8 +158,8 @@ fn generate_builtin_rules() -> Vec<(&'static str, TokenStream)> {
         builtins.push((property, quote! {
             #[inline]
             #[allow(dead_code, non_snake_case, unused_variables)]
-            fn #property_ident(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
-                state.match_char_by(::fuel_pest::unicode::#property_ident)
+            fn #property_ident(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
+                state.match_char_by(::pest::unicode::#property_ident)
             }
         }));
     }
@@ -168,7 +168,7 @@ fn generate_builtin_rules() -> Vec<(&'static str, TokenStream)> {
 
 // Needed because Cargo doesn't watch for changes in grammars.
 fn generate_include(name: &Ident, path: &str) -> TokenStream {
-    let const_name = Ident::new(&format!("_fuel_pest_GRAMMAR_{}", name), Span::call_site());
+    let const_name = Ident::new(&format!("_pest_GRAMMAR_{}", name), Span::call_site());
     quote! {
         #[allow(non_upper_case_globals)]
         const #const_name: &'static str = include_str!(#path);
@@ -229,7 +229,7 @@ fn generate_rule(rule: OptimizedRule) -> TokenStream {
         let atomic = generate_expr_atomic(rule.expr);
 
         quote! {
-            state.atomic(::fuel_pest::Atomicity::Atomic, |state| {
+            state.atomic(::pest::Atomicity::Atomic, |state| {
                 #atomic
             })
         }
@@ -243,7 +243,7 @@ fn generate_rule(rule: OptimizedRule) -> TokenStream {
         RuleType::Normal => quote! {
             #[inline]
             #[allow(non_snake_case, unused_variables)]
-            pub fn #name(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+            pub fn #name(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                 state.rule(Rule::#name, |state| {
                     #expr
                 })
@@ -252,16 +252,16 @@ fn generate_rule(rule: OptimizedRule) -> TokenStream {
         RuleType::Silent => quote! {
             #[inline]
             #[allow(non_snake_case, unused_variables)]
-            pub fn #name(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+            pub fn #name(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                 #expr
             }
         },
         RuleType::Atomic => quote! {
             #[inline]
             #[allow(non_snake_case, unused_variables)]
-            pub fn #name(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+            pub fn #name(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                 state.rule(Rule::#name, |state| {
-                    state.atomic(::fuel_pest::Atomicity::Atomic, |state| {
+                    state.atomic(::pest::Atomicity::Atomic, |state| {
                         #expr
                     })
                 })
@@ -270,8 +270,8 @@ fn generate_rule(rule: OptimizedRule) -> TokenStream {
         RuleType::CompoundAtomic => quote! {
             #[inline]
             #[allow(non_snake_case, unused_variables)]
-            pub fn #name(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
-                state.atomic(::fuel_pest::Atomicity::CompoundAtomic, |state| {
+            pub fn #name(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
+                state.atomic(::pest::Atomicity::CompoundAtomic, |state| {
                     state.rule(Rule::#name, |state| {
                         #expr
                     })
@@ -281,8 +281,8 @@ fn generate_rule(rule: OptimizedRule) -> TokenStream {
         RuleType::NonAtomic => quote! {
             #[inline]
             #[allow(non_snake_case, unused_variables)]
-            pub fn #name(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
-                state.atomic(::fuel_pest::Atomicity::NonAtomic, |state| {
+            pub fn #name(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
+                state.atomic(::pest::Atomicity::NonAtomic, |state| {
                     state.rule(Rule::#name, |state| {
                         #expr
                     })
@@ -300,7 +300,7 @@ fn generate_skip(rules: &[OptimizedRule]) -> TokenStream {
         (false, false) => generate_rule!(skip, Ok(state)),
         (true, false) => generate_rule!(
             skip,
-            if state.atomicity() == ::fuel_pest::Atomicity::NonAtomic {
+            if state.atomicity() == ::pest::Atomicity::NonAtomic {
                 state.repeat(|state| super::visible::WHITESPACE(state))
             } else {
                 Ok(state)
@@ -308,7 +308,7 @@ fn generate_skip(rules: &[OptimizedRule]) -> TokenStream {
         ),
         (false, true) => generate_rule!(
             skip,
-            if state.atomicity() == ::fuel_pest::Atomicity::NonAtomic {
+            if state.atomicity() == ::pest::Atomicity::NonAtomic {
                 state.repeat(|state| super::visible::COMMENT(state))
             } else {
                 Ok(state)
@@ -316,7 +316,7 @@ fn generate_skip(rules: &[OptimizedRule]) -> TokenStream {
         ),
         (true, true) => generate_rule!(
             skip,
-            if state.atomicity() == ::fuel_pest::Atomicity::NonAtomic {
+            if state.atomicity() == ::pest::Atomicity::NonAtomic {
                 state.sequence(|state| {
                     state
                         .repeat(|state| super::visible::WHITESPACE(state))
@@ -364,7 +364,7 @@ fn generate_expr(expr: OptimizedExpr) -> TokenStream {
         OptimizedExpr::PeekSlice(start, end_) => {
             let end = QuoteOption(end_);
             quote! {
-                state.stack_match_peek_slice(#start, #end, ::fuel_pest::MatchDir::BottomToTop)
+                state.stack_match_peek_slice(#start, #end, ::pest::MatchDir::BottomToTop)
             }
         }
         OptimizedExpr::PosPred(expr) => {
@@ -531,7 +531,7 @@ fn generate_expr_atomic(expr: OptimizedExpr) -> TokenStream {
         OptimizedExpr::PeekSlice(start, end_) => {
             let end = QuoteOption(end_);
             quote! {
-                state.stack_match_peek_slice(#start, #end, ::fuel_pest::MatchDir::BottomToTop)
+                state.stack_match_peek_slice(#start, #end, ::pest::MatchDir::BottomToTop)
             }
         }
         OptimizedExpr::PosPred(expr) => {
@@ -1004,7 +1004,7 @@ mod tests {
             generate(name, &generics, Some(String::from("test.pest")), rules, defaults, true).to_string(),
             quote! {
                 #[allow(non_upper_case_globals)]
-                const _fuel_pest_GRAMMAR_MyParser: &'static str = include_str!("test.pest");
+                const _pest_GRAMMAR_MyParser: &'static str = include_str!("test.pest");
 
                 #[allow(dead_code, non_camel_case_types, clippy::upper_case_acronyms)]
                 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -1013,13 +1013,13 @@ mod tests {
                 }
 
                 #[allow(clippy::all)]
-                impl ::fuel_pest::Parser<Rule> for MyParser {
+                impl ::pest::Parser<Rule> for MyParser {
                     fn parse<'i>(
                         rule: Rule,
                         input: &'i str
                     ) -> #result<
-                        ::fuel_pest::iterators::Pairs<Rule>,
-                        ::fuel_pest::error::Error<Rule>
+                        ::pest::iterators::Pairs<Rule>,
+                        ::pest::error::Error<Rule>
                     > {
                         mod rules {
                             #![allow(clippy::upper_case_acronyms)]
@@ -1028,7 +1028,7 @@ mod tests {
 
                                 #[inline]
                                 #[allow(dead_code, non_snake_case, unused_variables)]
-                                pub fn skip(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+                                pub fn skip(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                                     Ok(state)
                                 }
                             }
@@ -1038,13 +1038,13 @@ mod tests {
 
                                 #[inline]
                                 #[allow(non_snake_case, unused_variables)]
-                                pub fn a(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+                                pub fn a(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                                     state.match_string("b")
                                 }
 
                                 #[inline]
                                 #[allow(dead_code, non_snake_case, unused_variables)]
-                                pub fn ANY(state: #box_ty<::fuel_pest::ParserState<Rule>>) -> ::fuel_pest::ParseResult<#box_ty<::fuel_pest::ParserState<Rule>>> {
+                                pub fn ANY(state: #box_ty<::pest::ParserState<Rule>>) -> ::pest::ParseResult<#box_ty<::pest::ParserState<Rule>>> {
                                     state.skip(1)
                                 }
                             }
@@ -1052,7 +1052,7 @@ mod tests {
                             pub use self::visible::*;
                         }
 
-                        ::fuel_pest::state(::std::sync::Arc::from(input), |state| {
+                        ::pest::state(::std::sync::Arc::from(input), |state| {
                             match rule {
                                 Rule::a => rules::a(state)
                             }

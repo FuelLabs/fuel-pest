@@ -1,11 +1,11 @@
 [package]
-name = "fuel_pest_bootstrap"
-description = "fuel_pest bootstrap script"
+name = "pest_bootstrap"
+description = "pest bootstrap script"
 version = "0.0.0"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
-homepage = "https://fuel_pest-parser.github.io/"
-repository = "https://github.com/fuel_pest-parser/fuel_pest"
-documentation = "https://docs.rs/fuel_pest"
+homepage = "https://pest-parser.github.io/"
+repository = "https://github.com/pest-parser/pest"
+documentation = "https://docs.rs/pest"
 publish = false
 license = "MIT/Apache-2.0"
 
@@ -14,6 +14,6 @@ pest_generator = "2.1.1" # Use the crates-io version, which (should be) known-go
 quote = "1.0"
 
 [badges]
-codecov = { repository = "fuel_pest-parser/fuel_pest" }
+codecov = { repository = "pest-parser/pest" }
 maintenance = { status = "actively-developed" }
-travis-ci = { repository = "fuel_pest-parser/fuel_pest" }
+travis-ci = { repository = "pest-parser/pest" }

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -11,10 +11,10 @@ use std::char;
 use std::iter::Peekable;
 use std::sync::Arc;
 
-use fuel_pest::error::{Error, ErrorVariant};
-use fuel_pest::iterators::{Pair, Pairs};
-use fuel_pest::prec_climber::{Assoc, Operator, PrecClimber};
-use fuel_pest::{Parser, Span};
+use pest::error::{Error, ErrorVariant};
+use pest::iterators::{Pair, Pairs};
+use pest::prec_climber::{Assoc, Operator, PrecClimber};
+use pest::{Parser, Span};
 
 use ast::{Expr, Rule as AstRule, RuleType};
 use validator;

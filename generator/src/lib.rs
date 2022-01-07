@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -7,11 +7,11 @@
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
 
-#![doc(html_root_url = "https://docs.rs/fuel_pest_derive")]
+#![doc(html_root_url = "https://docs.rs/pest_derive")]
 #![recursion_limit = "256"]
 
-extern crate fuel_pest;
-extern crate fuel_pest_meta;
+extern crate pest;
+extern crate pest_meta;
 
 extern crate proc_macro;
 extern crate proc_macro2;
@@ -31,8 +31,8 @@ use syn::{Attribute, DeriveInput, Generics, Ident, Lit, Meta};
 mod macros;
 mod generator;
 
-use fuel_pest_meta::parser::{self, Rule};
-use fuel_pest_meta::{optimizer, unwrap_or_report, validator};
+use pest_meta::parser::{self, Rule};
+use pest_meta::{optimizer, unwrap_or_report, validator};
 
 pub fn derive_parser(input: TokenStream, include_grammar: bool) -> TokenStream {
     let ast: DeriveInput = syn::parse2(input).unwrap();

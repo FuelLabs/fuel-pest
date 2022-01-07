@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -9,8 +9,8 @@
 
 #![feature(test)]
 
-extern crate fuel_pest;
-extern crate fuel_pest_grammars;
+extern crate pest;
+extern crate pest_grammars;
 extern crate test;
 
 use std::fs::File;
@@ -18,9 +18,9 @@ use std::io::Read;
 
 use test::Bencher;
 
-use fuel_pest::Parser;
+use pest::Parser;
 
-use fuel_pest_grammars::json::*;
+use pest_grammars::json::*;
 
 #[bench]
 fn data(b: &mut Bencher) {

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -25,10 +25,10 @@ use super::queueable_token::QueueableToken;
 use super::tokens::{self, Tokens};
 use RuleType;
 
-/// An iterator over [`Pair`]s. It is created by [`fuel_pest::state`] and [`Pair::into_inner`].
+/// An iterator over [`Pair`]s. It is created by [`pest::state`] and [`Pair::into_inner`].
 ///
 /// [`Pair`]: struct.Pair.html
-/// [`fuel_pest::state`]: ../fn.state.html
+/// [`pest::state`]: ../fn.state.html
 /// [`Pair::into_inner`]: struct.Pair.html#method.into_inner
 #[derive(Clone)]
 pub struct Pairs<R> {
@@ -61,7 +61,7 @@ impl<R: RuleType> Pairs<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -70,7 +70,7 @@ impl<R: RuleType> Pairs<R> {
     /// }
     ///
     /// let input = "a b";
-    /// let pairs = fuel_pest::state(input, |state| {
+    /// let pairs = pest::state(input, |state| {
     ///     // generating Token pairs with Rule::a and Rule::b ...
     /// #     state.rule(Rule::a, |s| s.match_string("a")).and_then(|s| s.skip(1))
     /// #         .and_then(|s| s.rule(Rule::b, |s| s.match_string("b")))
@@ -97,7 +97,7 @@ impl<R: RuleType> Pairs<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -106,7 +106,7 @@ impl<R: RuleType> Pairs<R> {
     /// }
     ///
     /// let input = "a b";
-    /// let pairs = fuel_pest::state(input, |state| {
+    /// let pairs = pest::state(input, |state| {
     ///     // generating Token pairs with Rule::a and Rule::b ...
     /// #     state.rule(Rule::a, |s| s.match_string("a")).and_then(|s| s.skip(1))
     /// #         .and_then(|s| s.rule(Rule::b, |s| s.match_string("b")))
@@ -126,7 +126,7 @@ impl<R: RuleType> Pairs<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -135,7 +135,7 @@ impl<R: RuleType> Pairs<R> {
     /// }
     ///
     /// let input = "";
-    /// let pairs = fuel_pest::state(input, |state| {
+    /// let pairs = pest::state(input, |state| {
     ///     // generating nested Token pair with Rule::b inside Rule::a
     /// #     state.rule(Rule::a, |state| {
     /// #         state.rule(Rule::b, |s| Ok(s))
@@ -156,7 +156,7 @@ impl<R: RuleType> Pairs<R> {
     ///
     /// ```
     /// # use std::rc::Rc;
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -164,7 +164,7 @@ impl<R: RuleType> Pairs<R> {
     /// }
     ///
     /// let input = "";
-    /// let pairs = fuel_pest::state(input, |state| {
+    /// let pairs = pest::state(input, |state| {
     ///     // generating Token pair with Rule::a ...
     /// #     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap();

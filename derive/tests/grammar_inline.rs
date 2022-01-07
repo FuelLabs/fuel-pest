@@ -9,9 +9,9 @@ extern crate alloc;
 use alloc::{format, vec::Vec};
 
 #[macro_use]
-extern crate fuel_pest;
+extern crate pest;
 #[macro_use]
-extern crate fuel_pest_derive;
+extern crate pest_derive;
 
 #[derive(Parser)]
 #[grammar_inline = "string = { \"abc\" }"]

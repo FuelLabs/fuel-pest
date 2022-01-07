@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -43,7 +43,7 @@ impl Position {
     ///
     /// # Examples
     /// ```
-    /// # use fuel_pest::Position;
+    /// # use pest::Position;
     /// let cheart = '💖';
     /// let heart = "💖";
     /// assert_eq!(Position::new(heart, 1), None);
@@ -62,7 +62,7 @@ impl Position {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::Position;
+    /// # use pest::Position;
     /// let start = Position::from_start("");
     /// assert_eq!(start.pos(), 0);
     /// ```
@@ -77,7 +77,7 @@ impl Position {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::Position;
+    /// # use pest::Position;
     /// let input = "ab";
     /// let mut start = Position::from_start(input);
     ///
@@ -97,7 +97,7 @@ impl Position {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::Position;
+    /// # use pest::Position;
     /// let input = "ab";
     /// let start = Position::from_start(input);
     /// let span = start.span(&start.clone());
@@ -123,13 +123,13 @@ impl Position {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "\na";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.match_string("\na");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().line_col(), (2, 2));
@@ -185,13 +185,13 @@ impl Position {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "\na";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.match_string("\na");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().line_of(), "a");

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -8,15 +8,15 @@
 // modified, or distributed except according to those terms.
 
 #[macro_use]
-extern crate fuel_pest;
-extern crate fuel_pest_grammars;
+extern crate pest;
+extern crate pest_grammars;
 
 use std::fs::File;
 use std::io::Read;
 
-use fuel_pest::Parser;
+use pest::Parser;
 
-use fuel_pest_grammars::toml::*;
+use pest_grammars::toml::*;
 
 #[test]
 fn boolean() {

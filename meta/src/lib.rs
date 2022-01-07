@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -12,9 +12,9 @@
 extern crate maplit;
 #[cfg(test)]
 #[macro_use]
-extern crate fuel_pest;
+extern crate pest;
 #[cfg(not(test))]
-extern crate fuel_pest;
+extern crate pest;
 
 use std::fmt::Display;
 

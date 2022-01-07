@@ -1,5 +1,5 @@
 [package]
-name = "fuel_pest_grammars-fuzz"
+name = "pest_grammars-fuzz"
 version = "0.0.0"
 authors = ["Automatically generated"]
 publish = false

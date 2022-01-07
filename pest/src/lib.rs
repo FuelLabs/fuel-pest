@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -8,9 +8,9 @@
 // modified, or distributed except according to those terms.
 #![cfg_attr(feature = "const_prec_climber", feature(const_fn_trait_bound))]
 
-//! # fuel_pest. The Elegant Parser
+//! # pest. The Elegant Parser
 //!
-//! fuel_pest is a general purpose parser written in Rust with a focus on accessibility, correctness,
+//! pest is a general purpose parser written in Rust with a focus on accessibility, correctness,
 //! and performance. It uses parsing expression grammars (or [PEG]) as input, which are similar in
 //! spirit to regular expressions, but which offer the enhanced expressivity needed to parse
 //! complex languages.
@@ -19,7 +19,7 @@
 //!
 //! ## Getting started
 //!
-//! The recommended way to start parsing with fuel_pest is to read the official [book].
+//! The recommended way to start parsing with pest is to read the official [book].
 //!
 //! Other helpful resources:
 //!
@@ -27,18 +27,18 @@
 //! * play with grammars and share them on our [fiddle]
 //! * leave feedback, ask questions, or greet us on [Gitter]
 //!
-//! [book]: https://fuel_pest-parser.github.io/book
-//! [docs.rs]: https://docs.rs/fuel_pest
-//! [fiddle]: https://fuel_pest-parser.github.io/#editor
-//! [Gitter]: https://gitter.im/dragostis/fuel_pest
+//! [book]: https://pest-parser.github.io/book
+//! [docs.rs]: https://docs.rs/pest
+//! [fiddle]: https://pest-parser.github.io/#editor
+//! [Gitter]: https://gitter.im/dragostis/pest
 //!
 //! ## Usage
 //!
-//! The core of fuel_pest is the trait [`Parser`], which provides an interface to the parsing
+//! The core of pest is the trait [`Parser`], which provides an interface to the parsing
 //! functionality.
 //!
-//! The accompanying crate `fuel_pest_derive` can automatically generate a [`Parser`] from a PEG
-//! grammar. Using `fuel_pest_derive` is highly encouraged, but it is also possible to implement
+//! The accompanying crate `pest_derive` can automatically generate a [`Parser`] from a PEG
+//! grammar. Using `pest_derive` is highly encouraged, but it is also possible to implement
 //! [`Parser`] manually if required.
 //!
 //! ## `.pest` files
@@ -53,16 +53,16 @@
 //! struct MyParser;
 //! ```
 //!
-//! The syntax of `.pest` files is documented in the [`fuel_pest_derive` crate].
+//! The syntax of `.pest` files is documented in the [`pest_derive` crate].
 //!
 //! ## Inline grammars
 //!
 //! Grammars can also be inlined by using the `#[grammar_inline = "..."]` attribute.
 //!
 //! [`Parser`]: trait.Parser.html
-//! [`fuel_pest_derive` crate]: https://docs.rs/fuel_pest_derive/
+//! [`pest_derive` crate]: https://docs.rs/pest_derive/
 
-#![doc(html_root_url = "https://docs.rs/fuel_pest")]
+#![doc(html_root_url = "https://docs.rs/pest")]
 
 extern crate alloc;
 extern crate ucd_trie;

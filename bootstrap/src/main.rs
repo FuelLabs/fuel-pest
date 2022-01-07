@@ -6,7 +6,7 @@ use pest_generator::derive_parser;
 use std::{fs::File, io::prelude::*, path::Path};
 
 fn main() {
-    let fuel_pest = Path::new(concat!(
+    let pest = Path::new(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/../meta/src/grammar.pest"
     ));
@@ -16,12 +16,12 @@ fn main() {
     ));
 
     let derived = {
-        let path = fuel_pest.to_string_lossy();
-        let fuel_pest = quote! {
+        let path = pest.to_string_lossy();
+        let pest = quote! {
             #[grammar = #path]
             pub struct PestParser;
         };
-        derive_parser(fuel_pest, false)
+        derive_parser(pest, false)
     };
 
     let mut file = File::create(rs).unwrap();

@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -9,9 +9,9 @@
 
 use std::collections::{HashMap, HashSet};
 
-use fuel_pest::error::{Error, ErrorVariant, InputLocation};
-use fuel_pest::iterators::Pairs;
-use fuel_pest::Span;
+use pest::error::{Error, ErrorVariant, InputLocation};
+use pest::iterators::Pairs;
+use pest::Span;
 
 use parser::{ParserExpr, ParserNode, ParserRule, Rule};
 use UNICODE_PROPERTY_NAMES;
@@ -72,17 +72,17 @@ pub fn validate_pairs(pairs: Pairs<Rule>) -> Result<Vec<Span>, Vec<Error<Rule>>>
     rust_keywords.insert("while");
     rust_keywords.insert("yield");
 
-    let mut fuel_pest_keywords = HashSet::new();
-    fuel_pest_keywords.insert("_");
-    fuel_pest_keywords.insert("ANY");
-    fuel_pest_keywords.insert("DROP");
-    fuel_pest_keywords.insert("EOI");
-    fuel_pest_keywords.insert("PEEK");
-    fuel_pest_keywords.insert("PEEK_ALL");
-    fuel_pest_keywords.insert("POP");
-    fuel_pest_keywords.insert("POP_ALL");
-    fuel_pest_keywords.insert("PUSH");
-    fuel_pest_keywords.insert("SOI");
+    let mut pest_keywords = HashSet::new();
+    pest_keywords.insert("_");
+    pest_keywords.insert("ANY");
+    pest_keywords.insert("DROP");
+    pest_keywords.insert("EOI");
+    pest_keywords.insert("PEEK");
+    pest_keywords.insert("PEEK_ALL");
+    pest_keywords.insert("POP");
+    pest_keywords.insert("POP_ALL");
+    pest_keywords.insert("PUSH");
+    pest_keywords.insert("SOI");
 
     let mut builtins = HashSet::new();
     builtins.insert("ANY");
@@ -126,7 +126,7 @@ pub fn validate_pairs(pairs: Pairs<Rule>) -> Result<Vec<Span>, Vec<Error<Rule>>>
     let mut errors = vec![];
 
     errors.extend(validate_rust_keywords(&definitions, &rust_keywords));
-    errors.extend(validate_fuel_pest_keywords(&definitions, &fuel_pest_keywords));
+    errors.extend(validate_pest_keywords(&definitions, &pest_keywords));
     errors.extend(validate_already_defined(&definitions));
     errors.extend(validate_undefined(&definitions, &called_rules, &builtins));
 
@@ -172,19 +172,19 @@ pub fn validate_rust_keywords(
 }
 
 #[allow(clippy::implicit_hasher, clippy::ptr_arg)]
-pub fn validate_fuel_pest_keywords(
+pub fn validate_pest_keywords(
     definitions: &Vec<Span>,
-    fuel_pest_keywords: &HashSet<&str>,
+    pest_keywords: &HashSet<&str>,
 ) -> Vec<Error<Rule>> {
     let mut errors = vec![];
 
     for definition in definitions {
         let name = definition.as_str();
 
-        if fuel_pest_keywords.contains(name) {
+        if pest_keywords.contains(name) {
             errors.push(Error::new_from_span(
                 ErrorVariant::CustomError {
-                    message: format!("{} is a fuel_pest keyword", name),
+                    message: format!("{} is a pest keyword", name),
                 },
                 definition.clone(),
             ))
@@ -475,7 +475,7 @@ fn left_recursion<'a>(rules: HashMap<String, &'a ParserNode>) -> Vec<Error<Rule>
                     return Some(Error::new_from_span(
                         ErrorVariant::CustomError {
                             message: format!(
-                                "rule {} is left-recursive ({}); fuel_pest::prec_climber might be useful \
+                                "rule {} is left-recursive ({}); pest::prec_climber might be useful \
                                  in this case",
                                 node.span.as_str(),
                                 chain
@@ -535,7 +535,7 @@ mod tests {
     use super::super::parser::{consume_rules, PestParser};
     use super::super::unwrap_or_report;
     use super::*;
-    use fuel_pest::Parser;
+    use pest::Parser;
 
     #[test]
     #[should_panic(expected = "grammar error
@@ -561,8 +561,8 @@ mod tests {
 1 | ANY = { \"a\" }
   | ^-^
   |
-  = ANY is a fuel_pest keyword")]
-    fn fuel_pest_keyword() {
+  = ANY is a pest keyword")]
+    fn pest_keyword() {
         let input = "ANY = { \"a\" }";
         unwrap_or_report(validate_pairs(
             PestParser::parse(Rule::grammar_rules, input).unwrap(),
@@ -729,7 +729,7 @@ mod tests {
 1 | a = { a }
   |       ^
   |
-  = rule a is left-recursive (a -> a); fuel_pest::prec_climber might be useful in this case")]
+  = rule a is left-recursive (a -> a); pest::prec_climber might be useful in this case")]
     fn simple_left_recursion() {
         let input = "a = { a }";
         unwrap_or_report(consume_rules(
@@ -745,14 +745,14 @@ mod tests {
 1 | a = { b } b = { a }
   |       ^
   |
-  = rule b is left-recursive (b -> a -> b); fuel_pest::prec_climber might be useful in this case
+  = rule b is left-recursive (b -> a -> b); pest::prec_climber might be useful in this case
 
  --> 1:17
   |
 1 | a = { b } b = { a }
   |                 ^
   |
-  = rule a is left-recursive (a -> b -> a); fuel_pest::prec_climber might be useful in this case")]
+  = rule a is left-recursive (a -> b -> a); pest::prec_climber might be useful in this case")]
     fn indirect_left_recursion() {
         let input = "a = { b } b = { a }";
         unwrap_or_report(consume_rules(
@@ -768,7 +768,7 @@ mod tests {
 1 | a = { \"\" ~ \"a\"? ~ \"a\"* ~ (\"a\" | \"\") ~ a }
   |                                       ^
   |
-  = rule a is left-recursive (a -> a); fuel_pest::prec_climber might be useful in this case")]
+  = rule a is left-recursive (a -> a); pest::prec_climber might be useful in this case")]
     fn non_failing_left_recursion() {
         let input = "a = { \"\" ~ \"a\"? ~ \"a\"* ~ (\"a\" | \"\") ~ a }";
         unwrap_or_report(consume_rules(
@@ -784,7 +784,7 @@ mod tests {
 1 | a = { \"a\" | a }
   |             ^
   |
-  = rule a is left-recursive (a -> a); fuel_pest::prec_climber might be useful in this case")]
+  = rule a is left-recursive (a -> a); pest::prec_climber might be useful in this case")]
     fn non_primary_choice_left_recursion() {
         let input = "a = { \"a\" | a }";
         unwrap_or_report(consume_rules(

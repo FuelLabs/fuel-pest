@@ -1,5 +1,5 @@
 [package]
-name = "fuel_pest_meta-fuzz"
+name = "pest_meta-fuzz"
 version = "0.0.0"
 authors = ["Automatically generated"]
 publish = false

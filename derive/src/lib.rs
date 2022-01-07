@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -7,9 +7,9 @@
 // option. All files in the project carrying such notice may not be copied,
 // modified, or distributed except according to those terms.
 
-//! # fuel_pest. The Elegant Parser
+//! # pest. The Elegant Parser
 //!
-//! fuel_pest is a general purpose parser written in Rust with a focus on accessibility, correctness,
+//! pest is a general purpose parser written in Rust with a focus on accessibility, correctness,
 //! and performance. It uses parsing expression grammars (or [PEG]) as input, which are similar in
 //! spirit to regular expressions, but which offer the enhanced expressivity needed to parse
 //! complex languages.
@@ -18,7 +18,7 @@
 //!
 //! ## Getting started
 //!
-//! The recommended way to start parsing with fuel_pest is to read the official [book].
+//! The recommended way to start parsing with pest is to read the official [book].
 //!
 //! Other helpful resources:
 //!
@@ -26,10 +26,10 @@
 //! * play with grammars and share them on our [fiddle]
 //! * leave feedback, ask questions, or greet us on [Gitter]
 //!
-//! [book]: https://fuel_pest-parser.github.io/book
-//! [docs.rs]: https://docs.rs/fuel_pest
-//! [fiddle]: https://fuel_pest-parser.github.io/#editor
-//! [Gitter]: https://gitter.im/dragostis/fuel_pest
+//! [book]: https://pest-parser.github.io/book
+//! [docs.rs]: https://docs.rs/pest
+//! [fiddle]: https://pest-parser.github.io/#editor
+//! [Gitter]: https://gitter.im/dragostis/pest
 //!
 //! ## `.pest` files
 //!
@@ -271,11 +271,11 @@
 //! ## `Rule`
 //!
 //! All rules defined or used in the grammar populate a generated `enum` called `Rule`. This
-//! implements `fuel_pest`'s `RuleType` and can be used throughout the API.
+//! implements `pest`'s `RuleType` and can be used throughout the API.
 //!
 //! ## `Built-in rules`
 //!
-//! fuel_pest also comes with a number of built-in rules for convenience. They are:
+//! pest also comes with a number of built-in rules for convenience. They are:
 //!
 //! * `ASCII_DIGIT` - matches a numeric character from 0..9
 //! * `ASCII_NONZERO_DIGIT` - matches a numeric character from 1..9
@@ -289,13 +289,13 @@
 //! * `ASCII` - matches a character from \x00..\x7f
 //! * `NEWLINE` - matches either "\n" or "\r\n" or "\r"
 
-#![doc(html_root_url = "https://docs.rs/fuel_pest_derive")]
-extern crate fuel_generator;
+#![doc(html_root_url = "https://docs.rs/pest_derive")]
+extern crate pest_generator;
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
 
 #[proc_macro_derive(Parser, attributes(grammar, grammar_inline))]
 pub fn derive_parser(input: TokenStream) -> TokenStream {
-    fuel_generator::derive_parser(input.into(), true).into()
+    pest_generator::derive_parser(input.into(), true).into()
 }

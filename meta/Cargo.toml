@@ -1,12 +1,12 @@
 [package]
-name = "fuel_pest_meta"
-description = "fuel_pest meta language parser and validator"
+name = "fuel-pest_meta"
+description = "pest meta language parser and validator"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
-homepage = "https://fuel_pest-parser.github.io/"
-repository = "https://github.com/fuel_pest-parser/fuel_pest"
-documentation = "https://docs.rs/fuel_pest"
-keywords = ["fuel_pest", "parser", "meta", "optimizer"]
+homepage = "https://pest-parser.github.io/"
+repository = "https://github.com/pest-parser/pest"
+documentation = "https://docs.rs/pest"
+keywords = ["pest", "parser", "meta", "optimizer"]
 categories = ["parsing"]
 license = "MIT/Apache-2.0"
 readme = "_README.md"
@@ -15,12 +15,12 @@ include = ["Cargo.toml", "src/**/*", "src/grammar.rs", "_README.md", "LICENSE-*"
 
 [dependencies]
 maplit = "1.0"
-fuel-pest = { path = "../pest", version = "3.0.3" }
+pest = { path = "../pest", version = "3.0.3", package = "fuel-pest" }
 
 [badges]
-codecov = { repository = "fuel_pest-parser/fuel_pest" }
+codecov = { repository = "pest-parser/pest" }
 maintenance = { status = "actively-developed" }
-travis-ci = { repository = "fuel_pest-parser/fuel_pest" }
+travis-ci = { repository = "pest-parser/pest" }
 
 [build-dependencies]
 sha-1 = { version = "0.9", default-features = false }

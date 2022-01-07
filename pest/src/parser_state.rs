@@ -1,4 +1,4 @@
-// fuel_pest. The Elegant Parser
+// pest. The Elegant Parser
 // Copyright (c) 2018 Dragoș Tiselice
 //
 // Licensed under the Apache License, Version 2.0
@@ -71,9 +71,9 @@ pub struct ParserState<R: RuleType> {
 /// # Examples
 ///
 /// ```
-/// # use fuel_pest;
+/// # use pest;
 /// let input = "";
-/// fuel_pest::state::<(), _>(input, |s| Ok(s)).unwrap();
+/// pest::state::<(), _>(input, |s| Ok(s)).unwrap();
 /// ```
 pub fn state<'i, R: RuleType, F>(input: Arc<str>, f: F) -> Result<pairs::Pairs<R>, Error<R>>
 where
@@ -111,9 +111,9 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// let input = "";
-    /// let state: Box<fuel_pest::ParserState<&str>> = fuel_pest::ParserState::new(input);
+    /// let state: Box<pest::ParserState<&str>> = pest::ParserState::new(input);
     /// ```
     #[allow(clippy::new_ret_no_self)]
     pub fn new(input: Arc<str>) -> Box<Self> {
@@ -134,7 +134,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -142,7 +142,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let position = state.position();
     /// assert_eq!(position.pos(), 0);
     /// ```
@@ -155,8 +155,8 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
-    /// # use fuel_pest::Atomicity;
+    /// # use pest;
+    /// # use pest::Atomicity;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -164,7 +164,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let atomicity = state.atomicity();
     /// assert_eq!(atomicity, Atomicity::NonAtomic);
     /// ```
@@ -178,7 +178,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -186,7 +186,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "a";
-    /// let pairs: Vec<_> = fuel_pest::state(input, |state| {
+    /// let pairs: Vec<_> = pest::state(input, |state| {
     ///     state.rule(Rule::a, |s| Ok(s))
     /// }).unwrap().collect();
     ///
@@ -340,7 +340,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -348,7 +348,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "a";
-    /// let pairs: Vec<_> = fuel_pest::state(input, |state| {
+    /// let pairs: Vec<_> = pest::state(input, |state| {
     ///     state.sequence(|s| {
     ///         s.rule(Rule::a, |s| Ok(s)).and_then(|s| {
     ///             s.match_string("b")
@@ -387,7 +387,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -395,14 +395,14 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "aab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.repeat(|s| {
     ///     s.match_string("a")
     /// });
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 2);
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// result = state.repeat(|s| {
     ///     s.match_string("b")
     /// });
@@ -430,7 +430,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -438,13 +438,13 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let result = state.optional(|s| {
     ///     s.match_string("ab")
     /// });
     /// assert!(result.is_ok());
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// let result = state.optional(|s| {
     ///     s.match_string("ac")
     /// });
@@ -467,19 +467,19 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let result = state.match_char_by(|c| c.is_ascii());
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 1);
     ///
     /// let input = "❤";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let result = state.match_char_by(|c| c.is_ascii());
     /// assert!(result.is_err());
     /// assert_eq!(result.unwrap_err().position().pos(), 0);
@@ -502,18 +502,18 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.match_string("ab");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 2);
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// result = state.match_string("ac");
     /// assert!(result.is_err());
     /// assert_eq!(result.unwrap_err().position().pos(), 0);
@@ -533,18 +533,18 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.match_insensitive("AB");
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 2);
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// result = state.match_insensitive("AC");
     /// assert!(result.is_err());
     /// assert_eq!(result.unwrap_err().position().pos(), 0);
@@ -564,18 +564,18 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.match_range('a'..'z');
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 1);
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// result = state.match_range('A'..'Z');
     /// assert!(result.is_err());
     /// assert_eq!(result.unwrap_err().position().pos(), 0);
@@ -595,18 +595,18 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.skip(1);
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 1);
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// result = state.skip(3);
     /// assert!(result.is_err());
     /// assert_eq!(result.unwrap_err().position().pos(), 0);
@@ -626,13 +626,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "abcd";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.skip_until(&["c", "d"]);
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 2);
@@ -649,17 +649,17 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.start_of_input();
     /// assert!(result.is_ok());
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// state = state.match_string("ab").unwrap();
     /// result = state.start_of_input();
     /// assert!(result.is_err());
@@ -679,17 +679,17 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.end_of_input();
     /// assert!(result.is_err());
     ///
-    /// state = fuel_pest::ParserState::new(input);
+    /// state = pest::ParserState::new(input);
     /// state = state.match_string("ab").unwrap();
     /// result = state.end_of_input();
     /// assert!(result.is_ok());
@@ -711,7 +711,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -719,7 +719,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "a";
-    /// let pairs: Vec<_> = fuel_pest::state(input, |state| {
+    /// let pairs: Vec<_> = pest::state(input, |state| {
     ///     state.lookahead(true, |state| {
     ///         state.rule(Rule::a, |s| Ok(s))
     ///     })
@@ -778,7 +778,7 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::{self, Atomicity};
+    /// # use pest::{self, Atomicity};
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {
@@ -786,7 +786,7 @@ impl<R: RuleType> ParserState<R> {
     /// }
     ///
     /// let input = "a";
-    /// let pairs: Vec<_> = fuel_pest::state(input, |state| {
+    /// let pairs: Vec<_> = pest::state(input, |state| {
     ///     state.atomic(Atomicity::Atomic, |s| {
     ///         s.rule(Rule::a, |s| Ok(s))
     ///     })
@@ -831,13 +831,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.stack_push(|state| state.match_string("a"));
     /// assert!(result.is_ok());
     /// assert_eq!(result.unwrap().position().pos(), 1);
@@ -867,13 +867,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "aa";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.stack_push(|state| state.match_string("a")).and_then(
     ///     |state| state.stack_peek()
     /// );
@@ -897,13 +897,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "aa";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.stack_push(|state| state.match_string("a")).and_then(
     ///     |state| state.stack_pop()
     /// );
@@ -926,13 +926,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest::{self, MatchDir};
+    /// # use pest::{self, MatchDir};
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "abcd cd cb";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state
     ///     .stack_push(|state| state.match_string("a"))
     ///     .and_then(|state| state.stack_push(|state| state.match_string("b")))
@@ -983,13 +983,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "abba";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state
     ///     .stack_push(|state| state.match_string("a"))
     ///     .and_then(|state| { state.stack_push(|state| state.match_string("b")) })
@@ -1007,13 +1007,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// /// # use fuel_pest;
+    /// /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "aaaa";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.stack_push(|state| state.match_string("a")).and_then(|state| {
     ///     state.stack_push(|state| state.match_string("a"))
     /// }).and_then(|state| state.stack_match_peek());
@@ -1045,13 +1045,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "aa";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.stack_push(|state| state.match_string("a")).and_then(
     ///     |state| state.stack_drop()
     /// );
@@ -1072,13 +1072,13 @@ impl<R: RuleType> ParserState<R> {
     /// # Examples
     ///
     /// ```
-    /// # use fuel_pest;
+    /// # use pest;
     /// # #[allow(non_camel_case_types)]
     /// # #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     /// enum Rule {}
     ///
     /// let input = "ab";
-    /// let mut state: Box<fuel_pest::ParserState<Rule>> = fuel_pest::ParserState::new(input);
+    /// let mut state: Box<pest::ParserState<Rule>> = pest::ParserState::new(input);
     /// let mut result = state.restore_on_err(|state| state.stack_push(|state|
     ///     state.match_string("a")).and_then(|state| state.match_string("a"))
     /// );

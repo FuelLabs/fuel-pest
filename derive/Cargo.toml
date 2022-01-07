@@ -1,12 +1,12 @@
 [package]
-name = "fuel_pest_derive"
-description = "fuel_pest's derive macro"
+name = "fuel-pest_derive"
+description = "pest's derive macro"
 version = "3.0.3"
 authors = ["Dragoș Tiselice <dragostiselice@gmail.com>"]
-homepage = "https://fuel_pest-parser.github.io/"
-repository = "https://github.com/fuel_pest-parser/fuel_pest"
-documentation = "https://docs.rs/fuel_pest"
-keywords = ["fuel_pest", "parser", "peg", "grammar"]
+homepage = "https://pest-parser.github.io/"
+repository = "https://github.com/pest-parser/pest"
+documentation = "https://docs.rs/pest"
+keywords = ["pest", "parser", "peg", "grammar"]
 categories = ["parsing"]
 license = "MIT/Apache-2.0"
 readme = "_README.md"
@@ -17,14 +17,14 @@ proc-macro = true
 
 [features]
 default = ["std"]
-std = ["fuel-pest/std", "fuel_generator/std"]
+std = ["pest/std", "pest_generator/std"]
 
 [dependencies]
 # for tests, included transitively anyway
-fuel-pest = { path = "../pest", version = "3.0.3", default-features = false }
-fuel_generator = { path = "../generator", version = "3.0.3", default-features = false }
+pest = { path = "../pest", version = "3.0.3", default-features = false, package = "fuel-pest" }
+pest_generator = { path = "../generator", version = "3.0.3", default-features = false, package = "fuel-pest_generator" }
 
 [badges]
-codecov = { repository = "fuel_pest-parser/fuel_pest" }
+codecov = { repository = "pest-parser/pest" }
 maintenance = { status = "actively-developed" }
-travis-ci = { repository = "fuel_pest-parser/fuel_pest" }
+travis-ci = { repository = "pest-parser/pest" }
