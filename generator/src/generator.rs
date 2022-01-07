@@ -168,7 +168,7 @@ fn generate_builtin_rules() -> Vec<(&'static str, TokenStream)> {
 
 // Needed because Cargo doesn't watch for changes in grammars.
 fn generate_include(name: &Ident, path: &str) -> TokenStream {
-    let const_name = Ident::new(&format!("_pest_GRAMMAR_{}", name), Span::call_site());
+    let const_name = Ident::new(&format!("_PEST_GRAMMAR_{}", name), Span::call_site());
     quote! {
         #[allow(non_upper_case_globals)]
         const #const_name: &'static str = include_str!(#path);
@@ -1004,7 +1004,7 @@ mod tests {
             generate(name, &generics, Some(String::from("test.pest")), rules, defaults, true).to_string(),
             quote! {
                 #[allow(non_upper_case_globals)]
-                const _pest_GRAMMAR_MyParser: &'static str = include_str!("test.pest");
+                const _PEST_GRAMMAR_MyParser: &'static str = include_str!("test.pest");
 
                 #[allow(dead_code, non_camel_case_types, clippy::upper_case_acronyms)]
                 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]

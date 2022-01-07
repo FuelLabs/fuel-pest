@@ -275,7 +275,7 @@
 //!
 //! ## `Built-in rules`
 //!
-//! pest also comes with a number of built-in rules for convenience. They are:
+//! Pest also comes with a number of built-in rules for convenience. They are:
 //!
 //! * `ASCII_DIGIT` - matches a numeric character from 0..9
 //! * `ASCII_NONZERO_DIGIT` - matches a numeric character from 1..9
